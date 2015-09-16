@@ -61,17 +61,18 @@ end
 function c9301.tgfilter(c)
 	return  c:IsAbleToHand() and (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1373) and c:GetCode()~=9301) or (c:GetCode()==77462146)
 end
-function c9301.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c9301.tgfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c9301.tgfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local sg=Duel.SelectTarget(tp,c9301.tgfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,sg:GetCount(),0,0)
-end
-function c9301.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
++function c9301.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c9301.tgfilter(chkc) end		+	if chk==0 then return Duel.IsExistingMatchingCard(c9301.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+-	if chk==0 then return Duel.IsExistingTarget(c9301.tgfilter,tp,LOCATION_GRAVE,0,1,nil) end		+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)		
+-	local sg=Duel.SelectTarget(tp,c9301.tgfilter,tp,LOCATION_GRAVE,0,1,1,nil)		
+-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,sg:GetCount(),0,0)		
+ end		 end
+ function c9301.tdop(e,tp,eg,ep,ev,re,r,rp)		 function c9301.tdop(e,tp,eg,ep,ev,re,r,rp)
+-	local tc=Duel.GetFirstTarget()		+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+-	if tc and tc:IsRelateToEffect(e) then		+	local g=Duel.SelectMatchingCard(tp,c9301.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+-		Duel.SendtoHand(tc,nil,REASON_EFFECT)		+	if g:GetCount()>0 then
+-		Duel.ConfirmCards(1-tp,tc)		+		Duel.SendtoHand(g,nil,REASON_EFFECT)
++		Duel.ConfirmCards(1-tp,g)
 	end
 end
