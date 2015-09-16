@@ -50,10 +50,10 @@ function c9309.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2,true)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_OWNER_RELATE)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-		e3:SetValue(aux.imval1)
+		e3:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e3,true)
 	end
 end
