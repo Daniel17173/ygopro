@@ -15,5 +15,7 @@ http://mercury233.me/ygosrv233/pre.html
 Thanks for making scripts:
 
 ygohack137
+
 SalvationDevelopment
+
 Eerie Code
