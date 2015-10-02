@@ -41,7 +41,7 @@ function c6803.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(1,6803)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetTarget(c6803.destg)
 	e1:SetOperation(c6803.desop)
@@ -49,13 +49,14 @@ function c6803.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function c6803.filter1(c)
-	return c:IsLevelBelow(4) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9f) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsSetCard(0x9f) and c:IsAbleToHand()
 end
 function c6803.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c6803.filter1,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c6803.desop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c6803.filter1,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
@@ -72,7 +73,7 @@ function c6803.filter(c)
 	return c:IsSetCard(0x9f) or c:IsSetCard(0x99) and c:IsType(TYPE_MONSTER)
 end
 function c6803.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c6803.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c6803.filter,tp,LOCATION_HAND,0,1,nil) end
 end
 function c6803.afilter(c,code)
 	return c:IsCode(code)
