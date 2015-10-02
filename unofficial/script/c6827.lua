@@ -8,9 +8,9 @@ function c6827.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(13790624,0))
+	e2:SetDescription(aux.Stringid(6827,0))
 	e2:SetCategory(CATEGORY_DISABLE)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_PZONE)
@@ -34,7 +34,6 @@ function c6827.tfilter(c)
 end
 function c6827.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
-	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(c6827.tfilter,1,nil)and g:GetFirst()~=e:GetHandler() and Duel.IsChainDisablable(ev)
 end
@@ -43,8 +42,10 @@ function c6827.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c6827.negop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateEffect(ev)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	if Duel.SelectYesNo(tp,aux.Stringid(6827,1)) then
+		Duel.NegateEffect(ev)
+		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	else end
 end
 
 

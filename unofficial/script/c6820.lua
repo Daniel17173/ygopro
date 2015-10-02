@@ -28,7 +28,7 @@ function c6820.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c6820.filter(c)
-	return c:IsFaceup() and (c:GetCode()==13790617 or c:GetCode()==13790618 or c:GetCode()==78193831)
+	return c:IsFaceup() and c:GetCode()==78193831
 end
 function c6820.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c6820.filter(chkc) end
