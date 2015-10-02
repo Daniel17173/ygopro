@@ -1,6 +1,6 @@
-又一个YGOPRO先行卡的整理。
+YGOPRO先行卡的整理。
 
-Yet another collection of YGOPRO pre-released cards.
+A collection of YGOPRO pre-released cards.
 
 用于YGOPRO 233服。
 
