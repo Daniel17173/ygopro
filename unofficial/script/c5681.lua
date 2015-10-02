@@ -1,4 +1,4 @@
---¥¹¥Þ¥¤¥ë¡¤¥ï©`¥ë¥É
+--ã‚¹ãƒžã‚¤ãƒ«ãƒ»ãƒ¯ãƒ¼ãƒ«ãƒ‰
 function c5681.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
