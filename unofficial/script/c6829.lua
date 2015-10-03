@@ -14,7 +14,6 @@ function c6829.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_PZONE)
-	e2:SetCountLimit(1)
 	e2:SetCondition(c6829.negcon)
 	e2:SetTarget(c6829.negtg)
 	e2:SetOperation(c6829.negop)
@@ -35,6 +34,7 @@ function c6829.tfilter(c)
 end
 function c6829.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
+	if not e:GetHandler():GetFlagEffect(6829)==0 then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(c6829.tfilter,1,nil)and g:GetFirst()~=e:GetHandler() and Duel.IsChainDisablable(ev)
 end
@@ -44,6 +44,7 @@ function c6829.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c6829.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(6829,3)) then
+		e:GetHandler():RegisterFlagEffect(6829,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 		Duel.NegateEffect(ev)
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	else end
