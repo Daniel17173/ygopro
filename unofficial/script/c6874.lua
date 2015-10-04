@@ -1,4 +1,4 @@
---マジェスペクター・スーパーセル
+﻿--マジェスペクター・スーパーセル
 function c6874.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -61,6 +61,7 @@ function c6874.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:GetHandler():RegisterFlagEffect(tp,RESET_PHASE+PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectTarget(tp,c6874.filter,tp,LOCATION_GRAVE,0,5,5,nil)
+		Duel.ConfirmCards(tp,g)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 		e:SetLabel(1)
@@ -77,6 +78,7 @@ function c6874.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(c6874.filter,tp,LOCATION_GRAVE,0,5,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c6874.filter,tp,LOCATION_GRAVE,0,5,5,nil)
+	Duel.ConfirmCards(tp,g)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
@@ -89,7 +91,7 @@ function c6874.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
-	if ct==2 then
+	if ct==5 then
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
@@ -106,5 +108,5 @@ function c6874.effectfilter(e,ct)
 	local p=e:GetHandler():GetControler()
 	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
 	local tc=te:GetHandler()
-	return p==tp and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsSetCard(0xd0) and tc~=e:GetHandler()
+	return p==tp and tc:IsType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and tc:IsSetCard(0xd0) and tc~=e:GetHandler()
 end
