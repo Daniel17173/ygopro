@@ -47,4 +47,3 @@ function c6831.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
