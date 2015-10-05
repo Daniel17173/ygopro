@@ -36,12 +36,13 @@ function c6872.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 end
 
+
 function c6872.ngcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local loc,tg=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TARGET_CARDS)
 	local tc=tg:GetFirst()
-	if tg:GetCount()~=1 or not tc:IsLocation(LOCATION_MZONE) or not (tc:IsCode(6845) or tc:IsCode(6818) or tc:IsCode(6838) or tc:IsCode(78193831)) then return false end
+	if tg:GetCount()~=1 or not tc:IsLocation(LOCATION_MZONE) or not (tc:IsCode(6845) or tc:IsCode(6818) or tc:IsCode(6838) or tc:IsCode(78193831)) or tc:IsControler(1-tp) then return false end
 	return Duel.IsChainDisablable(ev) and loc~=LOCATION_DECK
 end
 function c6872.ngcost(e,tp,eg,ep,ev,re,r,rp,chk)
