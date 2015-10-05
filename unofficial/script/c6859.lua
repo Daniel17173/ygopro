@@ -12,11 +12,9 @@ function c6859.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_TO_GRAVE)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,68592)
-	e1:SetCondition(c6859.spcon)
 	e1:SetCost(c6859.cost)
 	e1:SetTarget(c6859.sptg)
 	e1:SetOperation(c6859.spop)
@@ -29,7 +27,7 @@ function c6859.filter1(c,e,tp)
 	return (c:IsControler(tp) or c:IsFaceup()) and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
 function c6859.filter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and (c:GetCode()==98502113 or c:GetCode()==13790617)  and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and (c:GetCode()==98502113 or c:GetCode()==6845)  and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c6859.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -82,10 +80,6 @@ function c6859.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 	end
-end
-
-function c6859.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsReason(REASON_RETURN)
 end
 
 function c6859.cost(e,tp,eg,ep,ev,re,r,rp,chk)
