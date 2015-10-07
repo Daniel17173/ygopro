@@ -24,6 +24,7 @@ function c6852.initial_effect(c)
 	--Equip
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCategory(CATEGORY_EQUIP)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_MZONE)
@@ -31,10 +32,9 @@ function c6852.initial_effect(c)
 	e3:SetTarget(c6852.target)
 	e3:SetOperation(c6852.operation)
 	c:RegisterEffect(e3)
-
 end
 function c6852.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(78193831) or c:IsCode(13790617))
+	return c:IsFaceup() and c:IsSetCard(0x1e8)
 end
 function c6852.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c6852.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -56,8 +56,6 @@ function c6852.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
-
 function c6852.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
@@ -73,20 +71,16 @@ function c6852.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c6852.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c6852.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local sg=Duel.SelectMatchingCard(tp,c6852.filter2,tp,LOCATION_GRAVE,0,1,1,nil)
-	if sg:GetCount()==0 then return end
 	local sc=sg:GetFirst()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and sc:IsRelateToEffect(e) then
-		if not Duel.Equip(tp,sc,tc,false) then return end
-		--Add Equip limit
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		if not Duel.Equip(tp,sc,tc,true) then return end
+		local e1=Effect.CreateEffect(tc)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
+		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(c6852.eqlimit)
@@ -94,5 +88,5 @@ function c6852.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c6852.eqlimit(e,c)
-	return e:GetLabelObject()==c
+	return e:GetOwner()==c
 end

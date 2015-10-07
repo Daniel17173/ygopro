@@ -4,7 +4,6 @@ function c9303.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_BE_MATERIAL)
-	e1:SetCountLimit(1,93031)
 	e1:SetCondition(c9303.efcon)
 	e1:SetOperation(c9303.efop)
 	c:RegisterEffect(e1)
@@ -32,6 +31,7 @@ function c9303.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCountLimit(1,93031)
 	e1:SetCondition(c9303.atkcon)
 	e1:SetOperation(c9303.atkop)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
@@ -59,14 +59,12 @@ function c9303.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-
-
 function c9303.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c9303.tgfilter(c)
-	return (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1373)) or (c:GetCode()==77462146 or c:GetCode()==13754004) and c:IsAbleToGrave()
+	return (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1373)) or (c:GetCode()==77462146 or c:GetCode()==9309) and c:IsAbleToGrave()
 end
 function c9303.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c9303.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -79,4 +77,3 @@ function c9303.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-
