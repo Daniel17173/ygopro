@@ -9,7 +9,7 @@ function c6863.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
+	e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_TO_DECK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
@@ -31,7 +31,6 @@ function c6863.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-
 function c6863.filter(c,e,tp)
 	return c:IsSetCard(0x1e71) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() and c:IsControler(tp)
 end

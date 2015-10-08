@@ -27,9 +27,8 @@ function c6827.initial_effect(c)
 	e3:SetCondition(c6827.spcon)
 	c:RegisterEffect(e3)
 end
-
 function c6827.tfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1e71) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x1e71) and c:IsControler(tp) and c:GetLocation()==LOCATION_ONFIELD
 end
 function c6827.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
@@ -48,8 +47,6 @@ function c6827.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	else end
 end
-
-
 function c6827.cfilter(c)
 	return c:IsFaceup() and c:GetCode()==6827
 end

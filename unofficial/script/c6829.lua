@@ -30,13 +30,13 @@ function c6829.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c6829.tfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1e71) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x1e71) and c:IsControler(tp) and c:GetLocation()==LOCATION_ONFIELD
 end
 function c6829.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	if not e:GetHandler():GetFlagEffect(6829)==0 then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(c6829.tfilter,1,nil)and g:GetFirst()~=e:GetHandler() and Duel.IsChainDisablable(ev)
+	return g and g:IsExists(c6829.tfilter,1,nil) and g:GetFirst()~=e:GetHandler() and Duel.IsChainDisablable(ev)
 end
 function c6829.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
