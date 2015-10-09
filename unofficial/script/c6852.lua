@@ -1,4 +1,4 @@
---破戒蛮竜－バスター・ドラゴン
+﻿--破戒蛮竜－バスター・ドラゴン
 function c6852.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
@@ -34,7 +34,7 @@ function c6852.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c6852.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(78193831) or c:IsCode(6818) or c:IsCode(6845))
+	return c:IsFaceup() and (c:IsCode(78193831) or c:IsCode(6818) or c:IsCode(6845)or c:IsCode(6838))
 end
 function c6852.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c6852.cfilter,tp,LOCATION_MZONE,0,1,nil)
