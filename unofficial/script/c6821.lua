@@ -14,12 +14,12 @@ function c6821.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTargetRange(1,1)
+	e2:SetTargetRange(0,1)
 	e2:SetValue(c6821.aclimit)
 	c:RegisterEffect(e2)
 end
 function c6821.filter(c)
-	return c:IsFaceup() and (c:GetCode()==6845 or c:GetCode()==6818 or c:GetCode()==78193831)
+	return c:IsFaceup() and (c:GetCode()==6818 or c:GetCode()==6845 or c:GetCode()==78193831)
 end
 function c6821.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c6821.filter(chkc) end
@@ -62,7 +62,6 @@ function c6821.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
 	return loc==LOCATION_GRAVE and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
 end
-
 function c6821.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
