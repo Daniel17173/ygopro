@@ -13,31 +13,61 @@ function c6868.initial_effect(c)
 	e1:SetOperation(c6868.activate)
 	c:RegisterEffect(e1)
 end
+function c6868.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(1)
+	return true
+end
+function c6868.costfilter(c,e,dg)
+	if not c:IsRace(RACE_ZOMBIE) then return false end
+	local a=0
+	if dg:IsContains(c) then a=1 end
+	if c:GetEquipCount()==0 then return dg:GetCount()-a>=2 end
+	local eg=c:GetEquipGroup()
+	local tc=eg:GetFirst()
+	while tc do
+		if dg:IsContains(tc) then a=a+1 end
+		tc=eg:GetNext()
+	end
+	return dg:GetCount()-a>=2
+end
+function c6868.tgfilter(c,e)
+	return c:IsDestructable() and c:IsCanBeEffectTarget(e)
+end
 function c6868.filter(c)
 	return c:IsSetCard(0xd7) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
-function c6868.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_ZOMBIE) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,nil,RACE_ZOMBIE)
-	Duel.Release(g,REASON_COST)
-end
 function c6868.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
-		if e:GetLabel()==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
+		if chkc then return chkc:IsOnField() and chkc:IsDestructable() and Duel.IsExistingMatchingCard(c6868.filter,tp,LOCATION_DECK,0,1,nil) end
+		if e:GetLabel()==1 then
+			e:SetLabel(0)
+			local rg=Duel.GetReleaseGroup(tp)
+			local dg=Duel.GetMatchingGroup(c6868.tgfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),e)
+			local res=rg:IsExists(c6868.costfilter,1,e:GetHandler(),e,dg)
+			return res
+		else
+			return Duel.IsExistingTarget(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,e:GetHandler())
+		end
+	end
+	if e:GetLabel()==1 then
 		e:SetLabel(0)
-		return Duel.IsExistingTarget(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,nil) 
-	and Duel.IsExistingMatchingCard(c6868.filter,tp,LOCATION_DECK,0,1,nil) end
-	e:SetLabel(0)
-	local g=Duel.SelectTarget(tp,Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,2,nil)
+		local rg=Duel.GetReleaseGroup(tp)
+		local dg=Duel.GetMatchingGroup(c6868.tgfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),e)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		local sg=rg:FilterSelect(tp,c6868.costfilter,1,1,e:GetHandler(),e,dg)
+		Duel.Release(sg,REASON_COST)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,2,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c6868.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.Destroy(sg,REASON_EFFECT)
-	local g2=Duel.SelectMatchingCard(tp,c6868.filter,tp,LOCATION_DECK,0,1,1,nil)
-	local tg=g2:GetFirst()
-	if tg==nil then return end
-	Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c6868.filter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then 
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	end
 end
