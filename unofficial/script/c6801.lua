@@ -16,8 +16,8 @@ function c6801.initial_effect(c)
 	e3:SetDescription(aux.Stringid(88935103,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCountLimit(1,6801)
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e3:SetTarget(c6801.sptg)
 	e3:SetOperation(c6801.spop)
@@ -45,7 +45,6 @@ function c6801.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-
 function c6801.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
