@@ -1,4 +1,4 @@
-﻿--ダイナミスト・ラッシュ
+--ダイナミスト・ラッシュ
 function c6873.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
