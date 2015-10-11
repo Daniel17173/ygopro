@@ -48,17 +48,17 @@ function c6827.negop(e,tp,eg,ep,ev,re,r,rp)
 	else end
 end
 function c6827.cfilter(c)
-	return false --c:IsFaceup() and c:GetCode()==6827
+	return c:IsFaceup() and c:GetCode()==6827
 end
 function c6827.mafilter(c)
-    return true
 	local atk=c:GetAttack()
-	--return c:IsFaceup() and not Duel.IsExistingMatchingCard(c6827.cmafilter,tp,LOCATION_MZONE,0,1,nil,atk)
+	return c:IsFaceup() and not Duel.IsExistingMatchingCard(c6827.cmafilter,c:GetControler(),0,LOCATION_MZONE,1,nil,atk)
 end
 function c6827.cmafilter(c,atk)
 	return c:IsFaceup() and c:GetAttack()>=atk
 end
-function c6827.spcon(e,tp)
-	return Duel.IsExistingMatchingCard(c6827.mafilter,tp,0,LOCATION_MZONE,1,nil)
-		-- and not Duel.IsExistingMatchingCard(c6827.cfilter,tp,LOCATION_MZONE,0,1,nil)
+function c6827.spcon(e,c)
+    if c==nil then return true end
+	return Duel.IsExistingMatchingCard(c6827.mafilter,c:GetControler(),0,LOCATION_MZONE,1,nil)
+		and not Duel.IsExistingMatchingCard(c6827.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
