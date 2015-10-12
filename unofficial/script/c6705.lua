@@ -23,6 +23,14 @@ function c6705.initial_effect(c)
 	e3:SetTarget(c6705.sptg)
 	e3:SetOperation(c6705.spop)
 	c:RegisterEffect(e3)
+	--Cannot be targeted
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetValue(aux.tgoval)
+	c:RegisterEffect(e4)
 end
 function c6705.desfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDestructable()
@@ -50,7 +58,7 @@ function c6705.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c6705.filter(c,e,tp)
-	return c:IsLevelBelow(3) and c:IsSetCard(0xd2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(7) and c:IsSetCard(0xd2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c6705.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
