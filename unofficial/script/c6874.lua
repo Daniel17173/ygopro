@@ -1,4 +1,4 @@
-﻿--マジェスペクター・スーパーセル
+--マジェスペクター・スーパーセル
 function c6874.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

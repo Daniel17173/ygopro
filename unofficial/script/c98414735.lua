@@ -1,4 +1,4 @@
-﻿--Burgesstoma Canadia
+--Burgesstoma Canadia
 function c98414735.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

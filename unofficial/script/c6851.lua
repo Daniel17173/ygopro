@@ -1,4 +1,4 @@
---¥´¥è¥¦¡¤¥­¥ó¥°
+--ã‚´ãƒ¨ã‚¦Â·ã‚­ãƒ³ã‚°
 function c6851.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsType,TYPE_SYNCHRO),1)
