@@ -55,7 +55,7 @@ function c6874.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if e:GetHandler():GetFlagEffect(tp,6874)==0
 		and Duel.IsPlayerCanDraw(tp,1)
 		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,5,nil,0xd0)
-		and Duel.SelectYesNo(tp,aux.Stringid(6874,0)) then
+		and Duel.SelectYesNo(tp,94) then
 		e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e:GetHandler():RegisterFlagEffect(tp,RESET_PHASE+PHASE_END,0,1)
