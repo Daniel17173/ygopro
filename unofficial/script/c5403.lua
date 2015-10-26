@@ -29,14 +29,14 @@ function c5403.initial_effect(c)
 end
 function c5403.exodfilter(c)
 	return (c:IsCode(12600382) or c:IsCode(33244944) or c:IsCode(8124921) or c:IsCode(44519536) or 
-	c:IsCode(70903634) or c:IsCode(7902349) or c:IsCode(33396948)) and 
+	c:IsCode(70903634) or c:IsCode(7902349) or c:IsCode(33396948) or c:IsCode(5401)) and 
 	((c:IsLocation(LOCATION_DECK+LOCATION_HAND) and c:IsAbleToGrave()) or (c:IsLocation(LOCATION_GRAVE) and c:IsAbleToHand()))
 end
 function c5403.target0(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if Duel.GetFlagEffect(tp,5403)==0 and Duel.IsExistingMatchingCard(c5403.exodfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil) and 
 	Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and
-	Duel.SelectYesNo(tp,aux.Stringid(5403,0)) then 
+	Duel.SelectYesNo(tp,94) then 
 	e:SetCountLimit(1,5403)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
