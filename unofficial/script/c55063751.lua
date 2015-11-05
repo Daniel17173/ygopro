@@ -47,7 +47,7 @@ function c55063751.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 
 function c55063751.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x223)
+	return c:IsFaceup() and c:IsSetCard(0xd3)
 end
 function c55063751.spcon2(e,c)
 	if c==nil then return true end
