@@ -1,6 +1,6 @@
 --Radian, the Multidimensional Kaiju
 function c28674152.initial_effect(c)
-	c:SetUniqueOnField(1,0,0x223)
+	c:SetUniqueOnField(1,0,20000000)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -53,8 +53,8 @@ function c28674152.spcon2(e,c)
 		Duel.IsExistingMatchingCard(c28674152.spfilter,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function c28674152.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x2a,3,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x2a,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)
 end
 function c28674152.filter(c,e,tp)
 	return c:IsFaceup() and c:IsControler(1-tp) and (not e or c:IsRelateToEffect(e))

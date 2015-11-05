@@ -1,6 +1,6 @@
 --Gameciel, the Sea Turtle Kaiju
 function c55063751.initial_effect(c)
-	c:SetUniqueOnField(1,0,0x223)
+	c:SetUniqueOnField(1,0,20000000)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -63,8 +63,8 @@ function c55063751.negcon(e,tp,eg,ep,ev,re,r,rp)
 	and not re:GetHandler():IsCode(55063751)
 end
 function c55063751.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x2a,3,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x2a,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)
 end
 function c55063751.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
