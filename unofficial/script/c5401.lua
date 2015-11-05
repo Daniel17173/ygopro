@@ -45,6 +45,7 @@ function c5401.initial_effect(c)
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e6:SetCode(EVENT_BATTLE_DESTROYED)
+	e6:SetCondition(c5401.spcon)
 	e6:SetTarget(c5401.sptg)
 	e6:SetOperation(c5401.spop)
 	c:RegisterEffect(e6)
@@ -71,7 +72,7 @@ function c5401.atkval(e,c)
 end
 
 function c5401.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and c5401.c5401(chkc) end
+	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and c5401.exodfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c5401.exodfilter,tp,LOCATION_GRAVE,0,1,nil) and tp==Duel.GetTurnPlayer() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c5401.exodfilter,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -85,6 +86,9 @@ function c5401.operation2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
+function c5401.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsLocation(LOCATION_GRAVE)
+end
 function c5401.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5401.exodfilter,tp,LOCATION_HAND,0,1,nil) end
 end
