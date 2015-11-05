@@ -13,7 +13,9 @@ function c5517.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c5517.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
+    local dt=3-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+    if e:GetHandler():IsLocation(LOCATION_HAND) then dt=dt+1 end
+	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 and dt>0 and Duel.IsPlayerCanDraw(tp,dt) end
 	--oath effects
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -24,27 +26,26 @@ function c5517.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c5517.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<3 end
-	local ht=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+    local dt=3-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+    if e:GetHandler():IsLocation(LOCATION_HAND) then dt=dt+1 end
+	if chk==0 then return dt>0 and Duel.IsPlayerCanDraw(tp,dt) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(3-ht)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3-ht)
+	Duel.SetTargetParam(dt)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,dt)
 end
 function c5517.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local ht=Duel.GetFieldGroupCount(p,LOCATION_HAND,0)
-	if ht<3 then
-		Duel.Draw(p,3-ht,REASON_EFFECT)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetOperation(c5517.disop)
-		Duel.RegisterEffect(e1,p)
-	end
+	if ht<3 then Duel.Draw(p,3-ht,REASON_EFFECT) end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetOperation(c5517.disop)
+	Duel.RegisterEffect(e1,p)
 end
 function c5517.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(e:GetOwnerPlayer(),LOCATION_HAND,0)
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_EFFECT)
 end
