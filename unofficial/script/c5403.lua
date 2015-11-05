@@ -4,13 +4,16 @@ function c5403.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_ATTACK+TIMING_END_PHASE)
 	e1:SetTarget(c5403.target0)
+	e1:SetOperation(c5403.operation1)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,5403)
+	e2:SetHintTiming(0,TIMING_ATTACK+TIMING_END_PHASE)
 	e2:SetTarget(c5403.target1)
 	e2:SetOperation(c5403.operation1)
 	c:RegisterEffect(e2)
@@ -37,12 +40,11 @@ function c5403.target0(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetFlagEffect(tp,5403)==0 and Duel.IsExistingMatchingCard(c5403.exodfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil) and 
 	Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and
 	Duel.SelectYesNo(tp,94) then 
-	e:SetCountLimit(1,5403)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.RegisterFlagEffect(tp,5403,RESET_PHASE+PHASE_END,0,1)
-	c5403.operation1(e,tp,eg,ep,ev,re,r,rp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+		Duel.RegisterFlagEffect(tp,5403,RESET_PHASE+PHASE_END,0,1)
 	else 
+		e:SetOperation(nil)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
@@ -58,6 +60,7 @@ end
 function c5403.operation1(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
+	if not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c5403.exodfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil)
 	if g:GetCount()>0 then
@@ -69,7 +72,7 @@ function c5403.operation1(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c5403.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+	return Duel.GetFlagEffect(tp,5403)==0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c5403.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and exodfilter(chkc) end
