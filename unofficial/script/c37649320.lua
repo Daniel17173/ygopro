@@ -35,7 +35,7 @@ function c37649320.efilter1(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
 end
 function c37649320.efilter2(e,c)
-	return c:IsSetCard(0xc1) and c:IsType(TYPE_TRAP)
+	return c:IsSetCard(0xd4) and c:IsType(TYPE_TRAP)
 end
 function c37649320.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_TRAP)
@@ -45,7 +45,7 @@ function c37649320.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c37649320.filter(c)
-	return c:IsSetCard(0xc1) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0xd4) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
 end
 function c37649320.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c37649320.filter,tp,LOCATION_DECK,0,1,nil) end
