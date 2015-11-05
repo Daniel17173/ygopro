@@ -13,7 +13,7 @@ function c9302.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCountLimit(1,13754015)
+	e2:SetCountLimit(1,11119302)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(c9302.cost)
 	e2:SetTarget(c9302.target)
@@ -34,7 +34,7 @@ function c9302.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c9302.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x1373)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x1373) or c:IsCode(77462146)
 end
 function c9302.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c9302.filter,tp,LOCATION_DECK,0,1,nil) end
