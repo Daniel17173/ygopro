@@ -31,12 +31,12 @@ function c9338.tcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c9338.filter1(c,e,tp)
 	local att=c:GetAttribute()
-	return c:IsFaceup() and c:IsSetCard(0x1e72) and (not c:IsType(TYPE_XYZ))
+	return c:IsFaceup() and c:IsSetCard(0x10d5)
 		and Duel.IsExistingMatchingCard(c9338.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,att)
 end
 function c9338.filter2(c,e,tp,mc,att)
-	return c:GetAttribute()==att  and c:IsSetCard(0x1e72) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
-		and c:GetCode()~=13754008 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+	return c:GetAttribute()==att and c:IsSetCard(0x20d5) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function c9338.ttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c9338.filter1(chkc,e,tp) end
@@ -65,10 +65,10 @@ function c9338.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function c9338.filter(c,e,tp)
-	return c:IsSetCard(0x1e72) and c:IsType(TYPE_XYZ) and c:GetCode()~=13754008
+	return c:IsSetCard(0x20d5) and c:IsType(TYPE_XYZ)
 end
 function c9338.rfilter(c,e,tp)
-	return c:GetCode()==13754008 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetCode()==9337 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c9338.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(c9338.filter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil,e,tp,e:GetHandler())

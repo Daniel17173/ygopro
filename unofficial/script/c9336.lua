@@ -56,7 +56,7 @@ function c9336.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c9336.mtfilter(c)
-	return c:IsSetCard(0x1e72)
+	return c:IsSetCard(0x10d5)
 end
 function c9336.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c9336.mtfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler()) end
