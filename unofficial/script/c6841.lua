@@ -13,8 +13,8 @@ function c6841.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsumon
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
+	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c6841.spcon)
@@ -27,8 +27,7 @@ function c6841.ttarget(e,c)
 end
 
 function c6841.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_STANDBY and Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp
 end
 function c6841.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
