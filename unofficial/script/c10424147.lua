@@ -68,7 +68,7 @@ function c10424147.filter(c,e,tp)
 	return c:IsSetCard(0x20d5) and c:IsType(TYPE_XYZ)
 end
 function c10424147.rfilter(c,e,tp)
-	return c:GetCode()==9337 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetCode()==84025439 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10424147.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(c10424147.filter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil,e,tp,e:GetHandler())
