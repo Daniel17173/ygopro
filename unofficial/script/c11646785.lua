@@ -41,10 +41,10 @@ function c11646785.atcon(e)
 	return e:GetHandler():GetOverlayCount()==0
 end
 function c11646785.fdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,11374678)
+	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,85374678)
 end
 function c11646785.fdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,11374678)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,85374678)
 end
 function c11646785.fdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

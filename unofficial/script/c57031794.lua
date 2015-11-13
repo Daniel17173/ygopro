@@ -11,6 +11,7 @@ function c57031794.initial_effect(c)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(57031794,0))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -21,7 +22,9 @@ function c57031794.initial_effect(c)
 	e2:SetTarget(c57031794.destg)
 	e2:SetOperation(c57031794.desop)
 	c:RegisterEffect(e2)
+	--add xyz material
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(57031794,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
@@ -41,11 +44,11 @@ function c57031794.desfilter(c)
 	return c:IsDestructable()
 end
 function c57031794.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c57031794.desfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c57031794.desfilter,tp,0,LOCATION_MZONE,1,nil) and
-	(tp==Duel.GetTurnPlayer() or e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,13754000)) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c57031794.desfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c57031794.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and
+	(tp==Duel.GetTurnPlayer() or e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,59975920)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c57031794.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c57031794.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c57031794.desop(e,tp,eg,ep,ev,re,r,rp)
