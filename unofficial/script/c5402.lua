@@ -13,11 +13,11 @@ function c5402.initial_effect(c)
 end
 function c5402.filter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(4)
-		and Duel.IsExistingMatchingCard(c5402.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode(),c:GetAttribute(),c:GetRace(),c:GetLevel())
+		and Duel.IsExistingMatchingCard(c5402.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode(),c:GetAttribute(),c:GetRace(),c:GetLevel())
 end
 function c5402.spfilter1(c,e,tp,code,attribute,race,level)
 	return c:IsAttribute(attribute) and c:IsRace(race) and c:GetLevel()==level and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	and Duel.IsExistingMatchingCard(c5402.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,code,c:GetCode(),c:GetAttribute(),c:GetRace(),c:GetLevel())
+	and Duel.IsExistingMatchingCard(c5402.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,code,c:GetCode(),c:GetAttribute(),c:GetRace(),c:GetLevel())
 end
 function c5402.spfilter2(c,e,tp,code1,code2,attribute,race,level)
 	return c:IsAttribute(attribute) and c:IsRace(race) and c:GetLevel()==level and not (c:IsCode(code1) or c:IsCode(code2))  and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -40,16 +40,6 @@ function c5402.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function c5402.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
-	local tc=Duel.GetFirstTarget()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectMatchingCard(tp,c5402.spfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode(),tc:GetAttribute(),tc:GetRace(),tc:GetLevel())
-	local sc=g1:GetFirst()
-	local g2=Duel.SelectMatchingCard(tp,c5402.spfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,sc:GetCode(),tc:GetCode(),tc:GetAttribute(),tc:GetRace(),tc:GetLevel())
-	g1:Merge(g2)
-	if g1:GetCount()==2 then
-		Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
-	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -57,4 +47,16 @@ function c5402.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
+	local tc=Duel.GetFirstTarget()
+	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g1=Duel.SelectMatchingCard(tp,c5402.spfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode(),tc:GetAttribute(),tc:GetRace(),tc:GetLevel())
+	local sc=g1:GetFirst()
+	if not sc then return end
+    local g2=Duel.SelectMatchingCard(tp,c5402.spfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,sc:GetCode(),tc:GetCode(),tc:GetAttribute(),tc:GetRace(),tc:GetLevel())
+    g1:Merge(g2)
+    if g1:GetCount()==2 then
+        Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
+    end
 end
