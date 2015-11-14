@@ -49,10 +49,10 @@ end
 function c12369277.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c12369277.filter1(chkc) end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingTarget(c12369277.filter1,tp,LOCATION_GRAVE,0,3,nil) end
+		and Duel.IsExistingTarget(c12369277.filter1,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c12369277.filter1,tp,LOCATION_GRAVE,0,3,3,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,5,0,0)
+	local g=Duel.SelectTarget(tp,c12369277.filter1,tp,LOCATION_GRAVE,0,1,3,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c12369277.operation1(e,tp,eg,ep,ev,re,r,rp)
