@@ -66,16 +66,16 @@ end
 function c58753372.thop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(c58753372.thfilter,tp,LOCATION_DECK,0,nil,e,tp)
 		if g:GetCount()<=2 then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		local g1=g:Select(tp,1,1,nil)
 		g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
 		if g:GetCount()>0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 			local g2=g:Select(tp,1,1,nil)
 			g:Remove(Card.IsCode,nil,g2:GetFirst():GetCode())
 			g1:Merge(g2)
 			if g:GetCount()>0 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 				local g3=g:Select(tp,1,1,nil)
 				g1:Merge(g3)
 			end
