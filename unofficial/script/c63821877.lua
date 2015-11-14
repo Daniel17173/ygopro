@@ -64,7 +64,7 @@ function c63821877.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c63821877.tgfilter(c)
-	return (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1373)) or (c:GetCode()==77462146 or c:GetCode()==9309) and c:IsAbleToGrave()
+	return (c:IsSetCard(0x1374) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x1373)) or c:GetCode()==77462146) and c:IsAbleToGrave()
 end
 function c63821877.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c63821877.tgfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -81,7 +81,7 @@ function c25542642.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c25542642.tgfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1373) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1374) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c25542642.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c25542642.tgfilter(chkc) end

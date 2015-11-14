@@ -58,7 +58,7 @@ function c90432163.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c90432163.tgfilter(c)
-	return  c:IsAbleToHand() and (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1373) and c:GetCode()~=90432163) or (c:GetCode()==77462146)
+	return c:IsAbleToHand() and (c:IsSetCard(0x1374) and c:GetCode()~=90432163 or c:GetCode()==77462146)
 end
 function c90432163.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c90432163.tgfilter,tp,LOCATION_DECK,0,1,nil) end

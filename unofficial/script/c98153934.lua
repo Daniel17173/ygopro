@@ -38,7 +38,7 @@ function c98153934.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local tgc=false
 	local tc=tg:GetFirst()
 	while tc do
-		if tc:IsSetCard(0x1373) and tc:IsType(TYPE_MONSTER) and tc:IsLocation(LOCATION_MZONE) and tc:IsControler(tp) and tc:IsFaceup() then tgc=true end
+		if (tc:IsSetCard(0x1374) or tc:GetCode()==77462146) and tc:IsType(TYPE_MONSTER) and tc:IsLocation(LOCATION_MZONE) and tc:IsControler(tp) and tc:IsFaceup() then tgc=true end
 		tc=tg:GetNext()
 	end
 	return ep~=tp and tgc

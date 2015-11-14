@@ -56,11 +56,11 @@ function c62709239.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c62709239.spfil1(c,e,tp)
-	return c:IsSetCard(0x1373) and c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	return c:IsSetCard(0x1374) and c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
 	and Duel.IsExistingMatchingCard(c62709239.spfil2,tp,LOCATION_GRAVE,0,1,c,e,tp,c:GetLevel()) and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
 end
 function c62709239.spfil2(c,e,tp,lv)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and  c:IsSetCard(0x1373) and c:GetLevel()==lv and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x1374) and c:GetLevel()==lv and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
 end
 function c62709239.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c62709239.spfil1(chkc,e,tp) end

@@ -25,7 +25,7 @@ function c99315585.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c99315585.filter(c)
-	return (c:IsSetCard(0x1373) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x1374)))
+	return (c:IsSetCard(0x1374) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x1373)) or c:GetCode()==77462146)
 end
 function c99315585.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c99315585.filter,1,nil)
@@ -47,9 +47,6 @@ end
 function c99315585.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
-function c99315585.filter(c)
-	return (c:IsSetCard(0x1373) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x1374)))
 end
 function c99315585.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c99315585.filter,tp,LOCATION_DECK,0,1,nil) end

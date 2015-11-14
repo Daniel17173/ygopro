@@ -27,7 +27,7 @@ function c36704180.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c36704180.filter(c)
-	return (c:IsSetCard(0x1373) or c:GetCode()==77462146) and c:IsAbleToGrave()
+	return (c:IsSetCard(0x1374) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x1373)) or c:GetCode()==77462146) and c:IsAbleToGrave()
 end
 function c36704180.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and
@@ -43,7 +43,7 @@ function c36704180.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c36704180.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(0x1373)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and (c:IsSetCard(0x1374) or c:GetCode()==77462146)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function c36704180.spcon1(e,tp,eg,ep,ev,re,r,rp)
