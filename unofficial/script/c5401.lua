@@ -87,7 +87,7 @@ function c5401.operation2(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c5401.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE)
+	return e:GetHandler():IsLocation(LOCATION_GRAVE) and Duel.IsPlayerCanDraw(tp,1)
 end
 function c5401.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5401.exodfilter,tp,LOCATION_HAND,0,1,nil) end

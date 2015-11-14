@@ -27,7 +27,7 @@ function c36704180.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c36704180.filter(c)
-	return (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1373)) or (c:GetCode()==77462146 or c:GetCode()==25542642) and c:IsAbleToGrave()
+	return (c:IsSetCard(0x1373) or c:GetCode()==77462146) and c:IsAbleToGrave()
 end
 function c36704180.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and
@@ -38,7 +38,7 @@ function c36704180.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c36704180.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.DiscardHand(p,c36704180.filter,1,1,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(p,c36704180.filter,1,1,REASON_EFFECT)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 
