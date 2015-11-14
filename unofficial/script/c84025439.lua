@@ -6,9 +6,11 @@ function c84025439.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(84025439,0))
 	e1:SetCategory(CATEGORY_TODECK)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
 	e1:SetCountLimit(1)
 	e1:SetCondition(c84025439.con1)
 	e1:SetCost(c84025439.tdcost)
@@ -40,7 +42,8 @@ function c84025439.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c84025439.con1(e)
-	return e:GetHandler():GetOverlayCount()>=3
+	local ph=Duel.GetCurrentPhase()
+	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and e:GetHandler():GetOverlayCount()>=2
 end
 function c84025439.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
