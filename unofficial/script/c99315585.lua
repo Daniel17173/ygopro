@@ -20,8 +20,8 @@ function c99315585.initial_effect(c)
 	e2:SetCountLimit(1,99315584)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(c99315585.cost)
-	e2:SetTarget(c99315585.target)
-	e2:SetOperation(c99315585.operation)
+	e2:SetCondition(c99315585.thcon)
+	e2:SetOperation(c99315585.regop)
 	c:RegisterEffect(e2)
 end
 function c99315585.filter(c)
@@ -48,13 +48,27 @@ function c99315585.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
+function c99315585.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c99315585.filter,tp,LOCATION_GRAVE,0,1,e:GetHandler())
+end
+function c99315585.regop(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetTarget(c99315585.target)
+	e1:SetOperation(c99315585.operation)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
 function c99315585.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c99315585.filter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(c99315585.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c99315585.operation(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,99315585)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c99315585.filter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c99315585.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
