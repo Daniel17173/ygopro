@@ -11,6 +11,10 @@ function c50692511.initial_effect(c)
 	e1:SetTarget(c50692511.target)
 	e1:SetOperation(c50692511.activate)
 	c:RegisterEffect(e1)
+	Duel.AddCustomActivityCounter(50692511,ACTIVITY_SPSUMMON,c50692511.counterfilter)
+end
+function c50692511.counterfilter(c)
+	return c:IsSetCard(0xba)
 end
 function c50692511.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(50692511,tp,ACTIVITY_SPSUMMON)==0 end
@@ -20,7 +24,7 @@ function c50692511.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(c50692511.splimit)
-	e1:SetReset(RESET_PHASE+RESET_END)
+	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function c50692511.splimit(e,c,sump,sumtype,sumpos,targetp,se)
