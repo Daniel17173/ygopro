@@ -13,15 +13,21 @@ function c85252081.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(85252081,0))
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
+	e2:SetCondition(c85252081.descon1)
 	e2:SetCost(c85252081.descost)
 	e2:SetTarget(c85252081.destg)
 	e2:SetOperation(c85252081.desop)
 	c:RegisterEffect(e2)
+	local e4=e2:Clone()
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetHintTiming(0,0x1c0)
+	e4:SetCondition(c85252081.descon2)
+	c:RegisterEffect(e4)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(85252081,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -34,14 +40,20 @@ end
 function c85252081.atcon(e)
 	return e:GetHandler():GetOverlayCount()==0
 end
+
+function c85252081.descon1(e,tp,eg,ep,ev,re,r,rp)
+	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,12369277)
+end
+function c85252081.descon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,12369277)
+end
 function c85252081.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c85252081.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsDestructable() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsDestructable,tp,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler())
-	and (tp==Duel.GetTurnPlayer() or e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,12369277)) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsDestructable,tp,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsDestructable,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
