@@ -57,5 +57,5 @@ function c12369277.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c12369277.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
 end
