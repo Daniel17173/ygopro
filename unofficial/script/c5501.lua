@@ -52,7 +52,7 @@ function c5501.initial_effect(c)
 
 end
 function c5501.cfilter(c,tp)
-	return c:IsCode(10000010)
+	return c:IsCode(10000010) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c5501.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c5501.cfilter,1,nil,tp)
