@@ -32,6 +32,17 @@ function c5681.initial_effect(c)
 	e4:SetCondition(c5681.rmcon)
 	e4:SetOperation(c5681.rmop)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+	e5:SetCondition(c5681.dircon)
+	c:RegisterEffect(e5)
+	local e6=e5:Clone()
+	e6:SetCode(EFFECT_CANNOT_ATTACK)
+	e6:SetCondition(c5681.atkcon)
+	c:RegisterEffect(e6)
 end
 function c5681.spfilter(c)
 	return c:IsFaceup() and c:IsCode(89631139) and c:IsCanBeFusionMaterial() and c:IsAbleToGrave()
@@ -63,4 +74,10 @@ end
 function c5681.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+end
+function c5681.dircon(e)
+	return e:GetHandler():GetAttackAnnouncedCount()>0
+end
+function c5681.atkcon(e)
+	return e:GetHandler():IsDirectAttacked()
 end
