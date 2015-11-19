@@ -1,4 +1,4 @@
-﻿--白き霊龍
+--白き霊龍
 function c5818.initial_effect(c)
 	--Normal monster
 	local e1=Effect.CreateEffect(c)
