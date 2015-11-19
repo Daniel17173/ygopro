@@ -37,7 +37,7 @@ function c36734924.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler())
 end
 function c36734924.filter(c)
-	return (c:IsCode(89631139) or c:IsCode(53347303) or c:IsCode(53183600) or c:IsCode(9433350)) and c:IsAbleToDeck()
+	return (c:IsSetCard(0xe0) or c:IsCode(89631139) or c:IsCode(9433350) or c:IsCode(23995346) or c:IsCode(53183600) or c:IsCode(53347303)) and c:IsAbleToDeck()
 end
 function c36734924.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c36734924.filter,tp,LOCATION_DECK,0,1,nil) end
