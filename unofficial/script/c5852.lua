@@ -1,30 +1,50 @@
 --青眼の精霊龍
 function c5852.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0xe0),1)
+	aux.AddSynchroProcedure(c,nil,aux.NonTuner(c5852.blueeyesfilter),1)
 	c:EnableReviveLimit()
+	--lock(temp)
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(35952884,0))
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_CHAINING)
-	e1:SetCountLimit(1)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(c5852.discon)
-	e1:SetTarget(c5852.distg)
-	e1:SetOperation(c5852.disop)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetOperation(c5852.temp)
+	c:RegisterEffect(e1)
+	--disable
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(5852,0))
+	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_CHAINING)
+	e2:SetCountLimit(1)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(c5852.discon)
+	e2:SetTarget(c5852.distg)
+	e2:SetOperation(c5852.disop)
 	c:RegisterEffect(e1)
 	--spsummon
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(c5852.cost1)
-	e2:SetTarget(c5852.target1)
-	e2:SetOperation(c5852.operation1)
-	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(5852,1))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCost(c5852.cost1)
+	e3:SetTarget(c5852.target1)
+	e3:SetOperation(c5852.operation1)
+	c:RegisterEffect(e3)
+end
 
+function c5852.blueeyesfilter(c)
+	return c:IsSetCard(0xe0) or c:IsCode(89631139) or c:IsCode(9433350) or c:IsCode(23995346) or c:IsCode(53183600) or c:IsCode(53347303) 
+end
+
+function c5852.temp(e,tp,eg,ep,ev,re,r,rp)
+	if eg:GetCount()>=2 then
+		Duel.Hint(HINT_CARD,0,4392470)
+		Duel.Remove(eg,POS_FACEUP,REASON_RULE)
+	end
 end
 
 function c5852.discon(e,tp,eg,ep,ev,re,r,rp)
