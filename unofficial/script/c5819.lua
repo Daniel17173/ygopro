@@ -35,17 +35,18 @@ function c5819.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c5819.gvfilter(c)
+function c5819.gvfilter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToGrave()
+		and Duel.IsExistingMatchingCard(c5819.spfilter2,tp,LOCATION_HAND,0,1,nil,e,tp)
 end
 function c5819.spfilter2(c,e,tp)
-	return c:IsSetCard(0xd8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0xe0) or c:IsCode(89631139) or c:IsCode(9433350) or c:IsCode(23995346) or c:IsCode(53183600) or c:IsCode(53347303)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c5819.gvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c5819.gvfilter(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(c5819.gvfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c5819.gvfilter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c5819.gvfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c5819.gvfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c5819.gvfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,0)
 end
 function c5819.gvop(e,tp,eg,ep,ev,re,r,rp)
