@@ -73,7 +73,7 @@ function c84025439.efilter(e,te)
 	return not c:IsSetCard(0x1e72)
 end
 function c84025439.con3(e)
-	return e:GetHandler():GetOverlayCount()>=5
+	return e:GetHandler():GetOverlayCount()>=6
 end
 function c84025439.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_RETURN)
