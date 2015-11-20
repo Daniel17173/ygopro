@@ -24,8 +24,8 @@ function c5501.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e3:SetValue(aux.tgval)
+	e3:SetCode(EFFECT_IMMUNE_EFFECT)
+	e3:SetValue(c5501.efilter)
 	c:RegisterEffect(e3)
 	--send to grave
 	local e4=Effect.CreateEffect(c)
@@ -53,6 +53,9 @@ function c5501.initial_effect(c)
 end
 function c5501.cfilter(c,tp)
 	return c:IsCode(10000010) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
+end
+function c5501.efilter(e,te)
+	return te:GetOwner()~=e:GetOwner()
 end
 function c5501.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c5501.cfilter,1,nil,tp)
