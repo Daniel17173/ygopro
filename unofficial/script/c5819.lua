@@ -40,7 +40,7 @@ function c5819.gvfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(c5819.spfilter2,tp,LOCATION_HAND,0,1,nil,e,tp)
 end
 function c5819.spfilter2(c,e,tp)
-	return (c:IsSetCard(0xe0) or c:IsCode(89631139) or c:IsCode(9433350) or c:IsCode(23995346) or c:IsCode(53183600) or c:IsCode(53347303)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c5819.gvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c5819.gvfilter(chkc,e,tp) end

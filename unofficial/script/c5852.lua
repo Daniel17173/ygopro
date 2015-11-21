@@ -37,7 +37,7 @@ function c5852.initial_effect(c)
 end
 
 function c5852.blueeyesfilter(c)
-	return c:IsSetCard(0xe0) or c:IsCode(89631139) or c:IsCode(9433350) or c:IsCode(23995346) or c:IsCode(53183600) or c:IsCode(53347303) 
+	return c:IsSetCard(0xdd)
 end
 
 function c5852.temp(e,tp,eg,ep,ev,re,r,rp)
