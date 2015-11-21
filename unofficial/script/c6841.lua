@@ -30,7 +30,7 @@ function c6841.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function c6841.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
+	return c:GetSequence()<5 and c:IsDestructable()
 end
 function c6841.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c6841.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
