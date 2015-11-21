@@ -13,7 +13,7 @@ function c5852.initial_effect(c)
 	--disable
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(5852,0))
-	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_NEGATE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCountLimit(1)
@@ -22,10 +22,10 @@ function c5852.initial_effect(c)
 	e2:SetCondition(c5852.discon)
 	e2:SetTarget(c5852.distg)
 	e2:SetOperation(c5852.disop)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(5852,1))
+	e3:SetDescription(aux.Stringid(5852,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -52,11 +52,8 @@ function c5852.discon(e,tp,eg,ep,ev,re,r,rp)
 	return loc==LOCATION_GRAVE and Duel.IsChainNegatable(ev)
 end
 function c5852.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return re:GetHandler():IsAbleToRemove() end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
-	end
 end
 function c5852.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
