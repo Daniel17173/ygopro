@@ -16,14 +16,20 @@ function c6805.costfilter(c)
 	return (c:IsSetCard(0xae) or c:IsSetCard(0xaf)) and c:GetCode()~=6805 and c:IsAbleToGraveAsCost()
 end
 function c6805.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c6805.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,c6805.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
+	local loc
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		loc=LOCATION_HAND+LOCATION_ONFIELD
+	else
+		loc=LOCATION_MZONE
+	end
+	if chk==0 then return Duel.IsExistingMatchingCard(c6805.costfilter,tp,loc,0,1,nil) end
+	local g=Duel.SelectMatchingCard(tp,c6805.costfilter,tp,loc,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function c6805.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
