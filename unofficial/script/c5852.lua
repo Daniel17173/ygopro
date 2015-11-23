@@ -3,12 +3,14 @@ function c5852.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(c5852.blueeyesfilter),1)
 	c:EnableReviveLimit()
-	--lock(temp)
+	--Limit summon by Eerie Code & Percival18
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_MAX_MZONE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetOperation(c5852.temp)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,1)
+	e1:SetValue(c5852.value)
 	c:RegisterEffect(e1)
 	--disable
 	local e2=Effect.CreateEffect(c)
@@ -40,11 +42,11 @@ function c5852.blueeyesfilter(c)
 	return c:IsSetCard(0xdd)
 end
 
-function c5852.temp(e,tp,eg,ep,ev,re,r,rp)
-	if eg:GetCount()>=2 then
-		Duel.Hint(HINT_CARD,0,4392470)
-		Duel.Remove(eg,POS_FACEUP,REASON_RULE)
-	end
+function c5852.value(e,fp,rp,r)
+	if r~=LOCATION_REASON_TOFIELD then return 5 end
+	local limit=Duel.GetFieldGroupCount(rp,LOCATION_MZONE,0)+1
+	if limit>5 then limit=5	end
+	return limit>0 and limit or 5
 end
 
 function c5852.discon(e,tp,eg,ep,ev,re,r,rp)
