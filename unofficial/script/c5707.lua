@@ -1,7 +1,7 @@
 --No.77 ザ・セブン・シンズ
 function c5707.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,12,3,c5707.ovfilter,aux.Stringid(5707,0),3,c5707.xyzop)
+	aux.AddXyzProcedure(c,nil,12,2,c5707.ovfilter,aux.Stringid(5707,0),2,c5707.xyzop)
 	c:EnableReviveLimit()
 	--Banish
 	local e1=Effect.CreateEffect(c)
