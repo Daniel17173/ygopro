@@ -1,5 +1,5 @@
 --究極幻神 アルティミトル・ビシバールキン
-function c5705.initial_effect(c)
+function c5706.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
@@ -13,8 +13,8 @@ function c5705.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_EXTRA)
-	e2:SetCondition(c5705.sprcon)
-	e2:SetOperation(c5705.sprop)
+	e2:SetCondition(c5706.sprcon)
+	e2:SetOperation(c5706.sprop)
 	c:RegisterEffect(e2)
 	--battle indestructable
 	local e3=Effect.CreateEffect(c)
@@ -28,7 +28,7 @@ function c5705.initial_effect(c)
 	e4:SetCode(EFFECT_SET_ATTACK)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetValue(c5705.adval)
+	e4:SetValue(c5706.adval)
 	c:RegisterEffect(e4)
 	--damage
 	local e3=Effect.CreateEffect(c)
@@ -39,53 +39,53 @@ function c5705.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetHintTiming(TIMING_STANDBY_PHASE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(c5705.damcon)
-	e3:SetTarget(c5705.damtg)
-	e3:SetOperation(c5705.damop)
+	e3:SetCondition(c5706.damcon)
+	e3:SetTarget(c5706.damtg)
+	e3:SetOperation(c5706.damop)
 	c:RegisterEffect(e3)
 end
-function c5705.sprfilter1(c,tp)
+function c5706.sprfilter1(c,tp)
 	local lv=c:GetLevel()
 	return lv>=5 and c:IsFaceup() and c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(c5705.sprfilter2,tp,LOCATION_MZONE,0,1,nil,lv)
+		and Duel.IsExistingMatchingCard(c5706.sprfilter2,tp,LOCATION_MZONE,0,1,nil,lv)
 end
-function c5705.sprfilter2(c,lv)
+function c5706.sprfilter2(c,lv)
 	return c:IsFaceup() and c:GetLevel()==lv and not c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost()
 end
-function c5705.sprcon(e,c)
+function c5706.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-		and Duel.IsExistingMatchingCard(c5705.sprfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
+		and Duel.IsExistingMatchingCard(c5706.sprfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
 end
-function c5705.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+function c5706.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,c5705.sprfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	local g1=Duel.SelectMatchingCard(tp,c5706.sprfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,c5705.sprfilter2,tp,LOCATION_MZONE,0,1,1,nil,g1:GetFirst():GetLevel())
+	local g2=Duel.SelectMatchingCard(tp,c5706.sprfilter2,tp,LOCATION_MZONE,0,1,1,nil,g1:GetFirst():GetLevel())
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_COST)
 end
-function c5705.adval(e,c)
+function c5706.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,LOCATION_MZONE)*1000
 end
-function c5705.damcon(e,tp,eg,ep,ev,re,r,rp)
+function c5706.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_STANDBY
 end
-function c5705.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c5706.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,LOCATION_MZONE)>0  end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ft,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ft,0,0)
 end
-function c5705.damop(e,tp,eg,ep,ev,re,r,rp)
+function c5706.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft2=Duel.GetLocationCount(tp,0,LOCATION_MZONE)
 	if (ft<=0 and ft2<=0) then return end
 	while Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 do
-		local token=Duel.CreateToken(tp,5706)
+		local token=Duel.CreateToken(tp,5707)
 		Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENCE)
-		local token=Duel.CreateToken(tp,5706)
+		local token=Duel.CreateToken(tp,5707)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENCE)
 	end
 	Duel.SpecialSummonComplete()
