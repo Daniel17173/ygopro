@@ -30,14 +30,14 @@ function c5706.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(c5706.adval)
 	c:RegisterEffect(e4)
-	--damage
+	--spsummon token
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(11501629,0))
 	e3:SetCategory(CATEGORY_TOKEN)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(TIMING_STANDBY_PHASE)
+	e3:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c5706.damcon)
 	e3:SetTarget(c5706.damtg)
@@ -70,7 +70,8 @@ function c5706.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,LOCATION_MZONE)*1000
 end
 function c5706.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_STANDBY
+	local ph=Duel.GetCurrentPhase()
+	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c5706.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,LOCATION_MZONE)>0  end
