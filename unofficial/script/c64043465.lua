@@ -36,7 +36,7 @@ function c64043465.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c64043465.tgfilter(c)
-	return ((c:IsSetCard(0x40) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xde)) and c:IsAbleToGrave()
+	return ((c:IsSetCard(0x40) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xde) or c:IsCode(12600382) or c:IsCode(33244944) or c:IsCode(33396948)) and c:IsAbleToGrave()
 end
 function c64043465.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToHand() end
@@ -86,7 +86,7 @@ function c64043465.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
 end
 function c64043465.thfilter(c)
-	return ((c:IsSetCard(0x40) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xde)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0x40) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xde) or c:IsCode(12600382) or c:IsCode(33244944) or c:IsCode(33396948)) and c:IsAbleToHand()
 end
 function c64043465.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c64043465.thfilter(chkc) end
