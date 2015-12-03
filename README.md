@@ -14,8 +14,12 @@ http://mercury233.me/ygosrv233/pre.html
 
 Thanks for making scripts:
 
-ygohack137
+[YGOPRO](https://github.com/Fluorohydride/ygopro-scripts)
 
-SalvationDevelopment
+[ygohack137](https://github.com/ygohack137)
 
-Eerie Code
+[SalvationDevelopment](https://github.com/SalvationDevelopment)
+
+[Ygopro.co](http://www.ygopro.co/)
+
+[Eerie Code](https://github.com/EerieCode)
