@@ -20,7 +20,7 @@ function c5905.initial_effect(c)
 	e2:SetTarget(c5905.target)
 	e2:SetOperation(c5905.operation)
 	c:RegisterEffect(e2)
-	--spsummon
+	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
