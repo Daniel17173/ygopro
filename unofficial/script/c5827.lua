@@ -63,6 +63,5 @@ function c5827.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c5827.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x1374)
-	and (bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_PENDULUM
-	or e:GetHandler():GetFlagEffect(5827)~=0)
+	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(5827)~=0)
 end
