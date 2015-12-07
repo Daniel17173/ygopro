@@ -33,7 +33,7 @@ function c6804.desfilter2(c,e)
 end
 function c6804.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c6804.desfilter2,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,e) end
+	if chk==0 then return Duel.IsExistingTarget(c6804.desfilter2,0,LOCATION_ONFIELD,0,1,nil,e) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(6804,1))
 	local g1=Duel.SelectTarget(tp,c6804.desfilter2,tp,LOCATION_ONFIELD,0,1,1,nil,e)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(6804,0))
