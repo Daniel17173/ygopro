@@ -59,7 +59,7 @@ function c5831.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1374)
 end
 function c5831.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c5831.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c5831.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c5831.rmtarget(e,c)
 	return not c:IsSetCard(0x1374)

@@ -44,7 +44,7 @@ function c5827.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1374)
 end
 function c5827.chainop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(c5827.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
+	if not Duel.IsExistingMatchingCard(c5827.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) then return false end
 	Duel.SetChainLimit(aux.FALSE)
 end
 function c5827.destg(e,tp,eg,ep,ev,re,r,rp,chk)

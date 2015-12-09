@@ -65,7 +65,7 @@ function c5828.filter(c)
 	return c:IsSetCard(0x1374)
 end
 function c5828.relcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c5828.filter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c5828.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c5828.rellimit(e,c,tp,sumtp)
 	return not c:IsSetCard(0x1374)
