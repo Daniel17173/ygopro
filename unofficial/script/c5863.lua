@@ -51,7 +51,7 @@ end
 function c5863.atktg(e,c)
 	return c:IsSetCard(0x1374) 
 end
-function c5863.filt(c)
+function c5863.filter(c)
 	return c:IsSetCard(0x1374) 
 end
 function c5863.value(e,c)
