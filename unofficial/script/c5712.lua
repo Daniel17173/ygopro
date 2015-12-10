@@ -32,8 +32,8 @@ function c5712.xyzop(e,tp,chk)
 	e:GetHandler():RegisterFlagEffect(5712,RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c5712.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function c5712.rmfil(c)
 	return c:IsAbleToRemove() and c:IsFaceup()
