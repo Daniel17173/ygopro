@@ -56,8 +56,7 @@ end
 function c5712.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	if Duel.SelectYesNo(tp,aux.Stringid(5712,2)) then
-		local g=e:GetHandler():GetOverlayGroup()
-		Duel.SendtoGrave(g,REASON_EFFECT)
+		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 		return true
 	else return false end
 end
