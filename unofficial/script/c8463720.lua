@@ -1,5 +1,5 @@
 --DDD剋竜王ベオウルフ
-function c6841.initial_effect(c)
+function c8463720.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsSetCard,0x10af),aux.FilterBoolFunction(Card.IsSetCard,0xaf),true)
@@ -9,7 +9,7 @@ function c6841.initial_effect(c)
 	e1:SetCode(EFFECT_PIERCE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(c6841.ttarget)
+	e1:SetTarget(c8463720.ttarget)
 	c:RegisterEffect(e1)
 	--spsumon
 	local e2=Effect.CreateEffect(c)
@@ -17,27 +17,27 @@ function c6841.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(c6841.spcon)
-	e2:SetTarget(c6841.target)
-	e2:SetOperation(c6841.activate)
+	e2:SetCondition(c8463720.spcon)
+	e2:SetTarget(c8463720.target)
+	e2:SetOperation(c8463720.activate)
 	c:RegisterEffect(e2)
 end
-function c6841.ttarget(e,c)
+function c8463720.ttarget(e,c)
 	return c:IsSetCard(0xaf)
 end
 
-function c6841.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c8463720.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
-function c6841.filter(c)
+function c8463720.filter(c)
 	return c:GetSequence()<5 and c:IsDestructable()
 end
-function c6841.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c6841.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
-	local sg=Duel.GetMatchingGroup(c6841.filter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
+function c8463720.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c8463720.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
+	local sg=Duel.GetMatchingGroup(c8463720.filter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
 end
-function c6841.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(c6841.filter,tp,LOCATION_SZONE,LOCATION_SZONE,e:GetHandler())
+function c8463720.activate(e,tp,eg,ep,ev,re,r,rp)
+	local sg=Duel.GetMatchingGroup(c8463720.filter,tp,LOCATION_SZONE,LOCATION_SZONE,e:GetHandler())
 	Duel.Destroy(sg,REASON_EFFECT)
 end
