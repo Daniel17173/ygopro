@@ -42,8 +42,7 @@ end
 function c5849.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	local rc=re:GetHandler()
-	if rc:IsRelateToEffect(re) then 
-		Duel.Destroy(rc,REASON_EFFECT)
+	if rc:IsRelateToEffect(re) and Duel.Destroy(rc,REASON_EFFECT) and rc:GetBaseAttack()>=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
