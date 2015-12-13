@@ -50,6 +50,9 @@ function c5501.initial_effect(c)
 	c:RegisterEffect(e5)
 
 end
+function c5501.tmpfilter(c)
+	return c:IsCode(5501)
+end
 function c5501.cfilter(c,tp)
 	return c:IsCode(10000010) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
@@ -62,10 +65,15 @@ end
 function c5501.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,true) end
+	local ct=Duel.GetMatchingGroupCount(c5501.tmpfilter,tp,LOCATION_MZONE,0,nil)
+	e:SetLabel(ct)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetChainLimit(aux.FALSE)
 end
 function c5501.spop(e,tp,eg,ep,ev,re,r,rp)
+    local ct=e:GetLabel()
+    local ct2=Duel.GetMatchingGroupCount(c5501.tmpfilter,tp,LOCATION_MZONE,0,nil)
+    if ct2>ct then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)>0 then
 		c:CompleteProcedure()
