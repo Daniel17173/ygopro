@@ -1,6 +1,7 @@
 --儀式の下準備
 --Script by mercury233
 
+io=require("io")
 Auxiliary.AddRitualProcGreater=function(c,filter)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -9,21 +10,35 @@ Auxiliary.AddRitualProcGreater=function(c,filter)
 	e1:SetTarget(Auxiliary.RPGTarget(filter))
 	e1:SetOperation(Auxiliary.RPGOperation(filter))
 	c:RegisterEffect(e1)
-	if c.material_filter==nil then
+	if c.tmp_material_filter==nil then
 		local code=c:GetOriginalCode()
 		local mc=_G["c" .. code]
+		mc.tmp_material_filter_set=true
 		mc.tmp_material_filter=filter
 	end
 end
-local mc=_G["c34834619"]
-if mc then
-	mc.tmp_material_filter=aux.FilterBoolFunction(Card.IsCode,85346853)
-end
-local mc=_G["c8198712"]
-if mc then
-	mc.tmp_material_filter=function(c)
-		local code=c:GetCode()
-		return code==72426662 or code==46427957
+function c5865.tmp_set_material_filter(c)
+	local code=c:GetOriginalCode()
+	local mc=_G["c" .. code]
+	mc.tmp_material_filter_set=true
+	if code==34834619 then
+		mc.tmp_material_filter=aux.FilterBoolFunction(Card.IsCode,85346853)
+		return
+	end
+	if code==8198712 then
+		mc.tmp_material_filter=function(c)
+			local code=c:GetCode()
+			return code==72426662 or code==46427957
+		end
+		return
+	end
+	local file=io.open("script/c" .. code .. ".lua", "r")
+	if file==nil then return end
+	local script=file:read("*all")
+	file:close()
+	local excode=string.match(script, "aux.AddRitualProcGreater%(c,aux.FilterBoolFunction%(Card.IsCode,(%d+)%)%)")
+	if excode then
+		mc.tmp_material_filter=aux.FilterBoolFunction(Card.IsCode,excode)
 	end
 end
 
@@ -43,11 +58,7 @@ function c5865.filter(c,tp)
 end
 function c5865.filter2(c,mc)
 	if bit.band(c:GetType(),0x81)==0x81 and c:IsAbleToHand() and not c:IsHasEffect(EFFECT_NECRO_VALLEY) then
-		if mc.tmp_material_filter==nil then
-			local code=c:GetOriginalCode()
-			local mc2=_G["c" .. code]
-			mc2.initial_effect(mc)
-		end
+		if not mc.tmp_material_filter_set then c5865.tmp_set_material_filter(mc) end
 		return mc.tmp_material_filter~=nil and mc.tmp_material_filter(c)
 	else return false end
 end
