@@ -12,8 +12,8 @@ function c5704.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EFFECT_CANNOT_BE_SYCNRHO_MATERIAL)
-	e2:SetValue(c5704.xyzlimit)
+	e2:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+	e2:SetValue(c5704.synlimit)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -35,12 +35,12 @@ end
 function c5704.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TUNER)
 end
-function c5704.xyzlimit(e,c)
+function c5704.synlimit(e,c)
 	if not c then return false end
 	return not c:IsAttribute(ATTRIBUTE_DARK)
 end
 function c5704.lvfilter(c,lv)
-	return c:IsFaceup() and c:GetLevel()~=lv
+	return c:IsFaceup() and c:GetLevel()>0 and c:GetLevel()~=lv
 end
 function c5704.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(tp) and c5704.lvfilter(chkc,e:GetHandler():GetLevel()) end
