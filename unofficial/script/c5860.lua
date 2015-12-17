@@ -10,11 +10,10 @@ function c5860.initial_effect(c)
 	e1:SetTarget(c5860.target)
 	e1:SetOperation(c5860.operation)
 	c:RegisterEffect(e1)
-	--Destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetOperation(c5860.desop)
+	e2:SetType(EFFECT_TYPE_EQUIP)
+	e2:SetCode(EFFECT_EXTRA_ATTACK)
+	e2:SetValue(c5860.val)
 	c:RegisterEffect(e2)
 	--Remove
 	local e3=Effect.CreateEffect(c)
@@ -31,22 +30,21 @@ function c5860.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetTarget(c5860.ftarget)
 	c:RegisterEffect(e4)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_EQUIP)
-	e1:SetCode(EFFECT_EXTRA_ATTACK)
-	e1:SetValue(c5860.val)
-	c:RegisterEffect(e1)
 end
 function c5860.filter2(c,e,tp)
 	return c:IsFaceup() and c:IsCode(5860)
 end
 function c5860.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0xe0)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0xdd)
+end
+function c5860.filter3(c,e,tp)
+	return c:IsSetCard(0xdd)
 end
 function c5860.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c5860.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c5860.filter,tp,LOCATION_GRAVE,0,3,nil,e,tp) 
+		and Duel.IsExistingTarget(c5860.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
+		and Duel.IsExistingTarget(c5860.filter3,tp,LOCATION_GRAVE,0,3,nil,e,tp) 
 	and not Duel.IsExistingTarget(c5860.filter2,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c5860.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -76,13 +74,7 @@ function c5860.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e2)
 	end
 end
-function c5860.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=c:GetFirstCardTarget()
-	if c:IsReason(REASON_DESTROY) and tc and tc:IsLocation(LOCATION_MZONE) then
-		Duel.Destroy(tc,REASON_EFFECT)
-	end
-end
+
 function c5860.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetHandler():GetEquipTarget()
@@ -95,5 +87,5 @@ function c5860.ftarget(e,c)
 end
 
 function c5860.val(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0xe0)-1
+	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0xdd)-1
 end
