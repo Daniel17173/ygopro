@@ -34,7 +34,7 @@ function c5822.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function c5822.filter(c)
-	return c:IsSetCard(0xe0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c5822.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5822.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -52,7 +52,7 @@ function c5822.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c5822.filter(c)
-	return c:IsSetCard(0xe0) and c:IsAbleToHand()
+	return c:IsSetCard(0xdd) and c:IsAbleToHand()
 end
 function c5822.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c5822.filter(chkc) end
