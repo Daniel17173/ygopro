@@ -10,13 +10,13 @@ function c5870.initial_effect(c)
 	e1:SetTarget(c5870.sptg)
 	e1:SetOperation(c5870.spop)
 	c:RegisterEffect(e1)
-	--to hand
+	--synchro effect
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(c5870.thcost)
+	e2:SetCost(c5870.sccost)
 	e2:SetTarget(c5870.sctg)
 	e2:SetOperation(c5870.scop)
 	c:RegisterEffect(e2)
@@ -46,7 +46,7 @@ function c5870.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function c5870.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c5870.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
