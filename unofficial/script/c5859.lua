@@ -36,7 +36,7 @@ function c5859.extg(e,c)
 	return c:IsType(TYPE_TUNER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevelBelow(1) 
 end
 function c5859.tgfilter(c)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(c5859.cfilter,c:GetControler(),LOCATION_DECK,0,1,nil,c)
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(c5859.cfilter,c:GetControler(),LOCATION_DECK+LOCATION_HAND,0,1,nil,c)
 end
 function c5859.cfilter(c,tc)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToGrave()

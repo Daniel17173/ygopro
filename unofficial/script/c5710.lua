@@ -79,12 +79,12 @@ function c5710.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c5710.filter,tp,0,LOCATION_MZONE,nil,atk)
 	Duel.Destroy(g,REASON_EFFECT)
 end
-function c5710.filter(c,sp)
+function c5710.filter1(c,sp)
 	return c:GetSummonPlayer()==sp
 end
 function c5710.drcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c5710.filter,1,nil,1-tp) 
-		and (not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS))
+	return eg:IsExists(c5710.filter1,1,nil,1-tp) 
+		--and (not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS))
 end
 function c5710.drop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,500,REASON_EFFECT)

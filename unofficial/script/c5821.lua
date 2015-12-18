@@ -51,7 +51,7 @@ function c5821.gvfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToGrave()
 end
 function c5821.spfilter(c,e,tp)
-	return c:IsSetCard(0xe0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c5821.gvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c5821.gvfilter(chkc) end
@@ -66,9 +66,9 @@ function c5821.gvop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(c5821.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) then
+			and Duel.IsExistingMatchingCard(c5821.spfilter,tp,LOCATION_GRAVE,0,1,tc,e,tp) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local g=Duel.SelectMatchingCard(tp,c5821.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+			local g=Duel.SelectMatchingCard(tp,c5821.spfilter,tp,LOCATION_GRAVE,0,1,1,tc,e,tp)
 			if g:GetCount()>0 then
 				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			end
