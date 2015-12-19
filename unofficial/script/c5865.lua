@@ -29,6 +29,14 @@ function c5865.tmp_set_material_filter(c)
 		mc.tmp_material_filter=aux.FilterBoolFunction(Card.IsCode,44665365)
 		return
 	end
+	if code==79306385 then
+		mc.tmp_material_filter=aux.FilterBoolFunction(Card.IsCode,48546368)
+		return
+	end
+	if code==45410988 then
+		mc.tmp_material_filter=aux.FilterBoolFunction(Card.IsCode,19025379)
+		return
+	end
 	if code==8198712 then
 		mc.tmp_material_filter=function(c)
 			local code=c:GetCode()
