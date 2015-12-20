@@ -32,7 +32,7 @@ function c5812.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c5812.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return not c:IsSetCard(0x209) and bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not (c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER)) and bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c5812.filter1(c,e)
 	return c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e) and c:IsAbleToRemove()
@@ -94,5 +94,5 @@ function c5812.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c5812.ptg(e,c)
-	return c:IsSetCard(0x209)
+	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER)
 end

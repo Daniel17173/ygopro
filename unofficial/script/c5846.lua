@@ -1,4 +1,5 @@
 --月光舞猫姫
+--Scripted by Eerie Code
 function c5846.initial_effect(c)
 	--fusion material
 	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0x209),2,true)
@@ -28,6 +29,9 @@ function c5846.initial_effect(c)
 	e3:SetTarget(c5846.damtg)
 	e3:SetOperation(c5846.damop)
 	c:RegisterEffect(e3)
+end
+function c5846.matfil(c)
+	return c:IsSetCard(0xe1) or c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER)
 end
 function c5846.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1

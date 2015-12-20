@@ -38,7 +38,7 @@ function c5811.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c5811.thfilter(c)
-	return c:IsSetCard(0x209) and not c:IsCode(5811) and c:IsAbleToHand()
+	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER) and not c:IsCode(5811) and c:IsAbleToHand()
 end
 function c5811.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5811.thfilter,tp,LOCATION_GRAVE,0,1,nil) end

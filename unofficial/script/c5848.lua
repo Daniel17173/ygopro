@@ -42,7 +42,7 @@ function c5848.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c5848.mat_filter(c)
-	return c:IsSetCard(0xe1) or c:IsSetCard(0x209)
+	return c:IsSetCard(0xe1) or c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER)
 end
 function c5848.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION

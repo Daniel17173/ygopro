@@ -25,7 +25,7 @@ function c5813.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c5813.filter(c,e,tp)
-	return c:IsSetCard(0x209) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c5813.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c5813.filter(chkc,e,tp) end

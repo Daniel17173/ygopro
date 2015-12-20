@@ -21,7 +21,7 @@ function c5808.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c5808.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x209) and not c:IsCode(5808)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x209) and not c:IsCode(5808)
 end
 function c5808.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c5808.filter(chkc) end
@@ -44,7 +44,7 @@ function c5808.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)
 end
 function c5808.filter2(c,e,tp)
-	return c:IsSetCard(0x209) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c5808.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
