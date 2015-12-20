@@ -20,7 +20,7 @@ function c5871.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c5871.cfilter,1,nil,tp)
 end
 function c5871.thfilter(c,e,tp)
-	return c:IsSetCard(0x209) and c:IsAbleToHand()
+	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c5871.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5871.thfilter,tp,LOCATION_DECK,0,1,nil) end
