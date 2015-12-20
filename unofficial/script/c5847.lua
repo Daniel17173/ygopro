@@ -36,9 +36,11 @@ function c5847.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_BATTLE_DESTROYING)
 	e4:SetCondition(aux.bdocon)
-	e4:SetOperation(c5847.atkop)
+	e4:SetOperation(c5847.atkdesop)
 	c:RegisterEffect(e4)
 end
+c5847_attacked=58471
+c5847_indestructible=58472
 
 function c5847.mat_filter(c)
 	return c:IsSetCard(0xe1) or c:IsSetCard(0x209)
@@ -58,82 +60,79 @@ end
 function c5847.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local e0=Effect.CreateEffect(c)
-		e0:SetType(EFFECT_TYPE_SINGLE)
-		e0:SetCode(EFFECT_EXTRA_ATTACK)
-		e0:SetValue(9999)
-		e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e0:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e0)
+		--indestructible
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_DESTROY_REPLACE)
+		e1:SetRange(LOCATION_SZONE)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetTarget(c5847.reptg)
+		e1:SetValue(c5847.repval)
+		Duel.RegisterEffect(e1,tp)
+		local g=Group.CreateGroup()
+		g:KeepAlive()
+		e1:SetLabelObject(g)
+		--infinte atk to monster
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_DAMAGE_STEP_END)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetOperation(c5847.unop)
-		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_EXTRA_ATTACK)
+ 		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e2:SetValue(9999)
+		e2:SetCondition(c5847.atkcon)
 		c:RegisterEffect(e2)
+		--reg attacked flag to battle target
 		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EVENT_DAMAGE_CALCULATING)
-		e3:SetCondition(c5846.indescon)
-		e3:SetOperation(c5846.indesop)
-		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e3:SetCode(EVENT_ATTACK_ANNOUNCE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+ 		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e3:SetOperation(c5847.atkop)
 		c:RegisterEffect(e3)
+		--can not attack one monster more than 2 times
 		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_FIELD)
-		e4:SetRange(LOCATION_MZONE)
-		e4:SetTargetRange(0,LOCATION_MZONE)
-		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
-		e4:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-		e4:SetTarget(c5847.valtg)
-		e4:SetValue(c5847.vala)
-		e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e4:SetType(EFFECT_TYPE_SINGLE)
+		e4:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
+ 		e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e4:SetValue(c5847.atktg)
 		c:RegisterEffect(e4)
 	end
 end
-function c5847.unop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	if c:GetFlagEffect(58472)==0 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE)
-		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(58472,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,1)
+function c5847.repfilter(c,tp)
+	return c:IsFaceup() and c:IsControler(1-tp) and c:IsLocation(LOCATION_MZONE)
+		and c:IsReason(REASON_BATTLE) and c:GetFlagEffect(c5847_indestructible)==0
+end
+function c5847.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return eg:IsExists(c5847.repfilter,1,nil,tp) end
+	local g=eg:Filter(c5847.repfilter,nil,tp)
+	local tc=g:GetFirst()
+	while tc do
+		tc:RegisterFlagEffect(c5847_indestructible,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+		tc=g:GetNext()
 	end
-	if bc then
-		if bc:GetFlagEffect(5847)>0 then
-			bc:RegisterFlagEffect(58471,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,1)
-		else
-			bc:RegisterFlagEffect(5847,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,1)
-		end
-	end
+	e:GetLabelObject():Clear()
+	e:GetLabelObject():Merge(g)
+	return true
 end
-function c5847.valtg(e,c)
-	return c:GetFlagEffect(58471)>0
+function c5847.repval(e,c)
+	local g=e:GetLabelObject()
+	return g:IsContains(c)
 end
-function c5847.vala(e,c)
-	return c==e:GetHandler()
+function c5847.atkcon(e)
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)>0
 end
-
-function c5846.indescon(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	return bc and bc:GetFlagEffect(5847)==0
-end
-function c5846.indesop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-	bc:RegisterEffect(e1,true)
-end
-
 function c5847.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=c:GetBattleTarget()
+	if tc then
+		tc:RegisterFlagEffect(c5847_attacked,RESET_PHASE+PHASE_END,0,1)
+	end
+end
+function c5847.atktg(e,c)
+	return c:GetFlagEffect(c5847_attacked)>=2
+end
+
+function c5847.atkdesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
