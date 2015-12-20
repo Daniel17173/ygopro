@@ -9,8 +9,9 @@ function c5710.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(c5710.indcon)
-	e1:SetOperation(c5710.regop)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(c5710.damcon)
+	e1:SetOperation(c5710.damop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -32,14 +33,6 @@ function c5710.initial_effect(c)
 	e4:SetTarget(c5710.destg)
 	e4:SetOperation(c5710.desop)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e5:SetProperty(EFFECT_FLAG_DELAY)
-	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e5:SetCondition(c5710.drcon1)
-	e5:SetOperation(c5710.drop1)
-	e5:SetRange(LOCATION_MZONE)
-	c:RegisterEffect(e5)
 end
 c5710.xyz_number=35
 function c5710.lpval(e,c)
@@ -53,11 +46,14 @@ function c5710.lpval(e,c)
 	if lp1>lp2 then 
 	return lp1-lp2 end
 end
-function c5710.indcon(e)
-	return e:GetHandler():GetOverlayCount()>0
+function c5710.filter1(c,sp)
+	return c:GetSummonPlayer()==sp
 end
-function c5710.regop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Damage(1-tp,500,REASON_EFFECT)
+function c5710.damcon(e)
+	return e:GetHandler():GetOverlayCount()>0 and eg:IsExists(c5710.filter1,1,nil,1-tp) 
+end
+function c5710.damop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Damage(1-tp,600,REASON_EFFECT)
 end
 function c5710.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -78,14 +74,4 @@ function c5710.desop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=c:GetAttack()
 	local g=Duel.GetMatchingGroup(c5710.filter,tp,0,LOCATION_MZONE,nil,atk)
 	Duel.Destroy(g,REASON_EFFECT)
-end
-function c5710.filter1(c,sp)
-	return c:GetSummonPlayer()==sp
-end
-function c5710.drcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c5710.filter1,1,nil,1-tp) 
-		--and (not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS))
-end
-function c5710.drop1(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Damage(1-tp,500,REASON_EFFECT)
 end

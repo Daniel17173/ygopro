@@ -39,11 +39,11 @@ function c5711.initial_effect(c)
 end
 c5711.xyz_number=84
 function c5711.ovfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK) and (c:GetRank()==10 or c:GetRank()==9) and c:GetOverlayCount()>1
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK) and (c:GetRank()==10 or c:GetRank()==9 or c:GetRank()==8) and c:GetOverlayCount()>1
 end
 function c5711.atkval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,c:GetControler(),LOCATION_MZONE,0,nil)
-	return g:GetSum(Card.GetRank)*300
+	return g:GetSum(Card.GetRank)*200
 end
 function c5711.indcon(e)
 	return e:GetHandler():GetOverlayCount()>0
@@ -57,7 +57,7 @@ function c5711.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c5711.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,5711)
-	Duel.Damage(1-tp,500,REASON_EFFECT)
+	Duel.Damage(1-tp,600,REASON_EFFECT)
 end
 function c5711.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
