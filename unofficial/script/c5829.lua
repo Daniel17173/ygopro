@@ -5,14 +5,12 @@ function c5829.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--destroy
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_RELEASE+CATEGORY_DESTROY)
-	e4:SetDescription(aux.Stringid(5829,0))
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetRange(LOCATION_PZONE)
 	e4:SetCountLimit(1)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e4:SetCondition(c5829.descon)
-	e4:SetTarget(c5829.destg)
 	e4:SetOperation(c5829.desop)
 	c:RegisterEffect(e4)
 	--act limit
@@ -53,19 +51,13 @@ end
 function c5829.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
-function c5829.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsLocation(LOCATION_DECK) end
-	if not Duel.CheckReleaseGroup(tp,nil,1,nil) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
-	end
-end
 function c5829.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,aux.Stringid(5829,1)) then
+	Duel.Hint(HINT_CARD,0,c:GetCode())
+	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,500) then
 		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,c)
-		Duel.Release(g,REASON_EFFECT)
-	else Duel.Destroy(c,REASON_EFFECT) end
+		Duel.Release(g,REASON_RULE)
+	else Duel.Destroy(c,REASON_RULE) end
 end
 
 function c5829.cfilter(c)

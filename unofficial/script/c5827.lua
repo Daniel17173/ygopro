@@ -9,15 +9,14 @@ function c5827.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetOperation(c5827.flipop)
 	c:RegisterEffect(e1)
-	--destroy
+	--maintain
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e2:SetTarget(c5827.destg)
+	e2:SetCondition(c5827.descon)
 	e2:SetOperation(c5827.desop)
 	c:RegisterEffect(e2)
 	--spsummon limit
@@ -47,15 +46,12 @@ function c5827.chainop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(c5827.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) then return false end
 	Duel.SetChainLimit(aux.FALSE)
 end
-function c5827.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetTurnPlayer()==tp end
-	if not Duel.CheckReleaseGroup(tp,nil,1,nil) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
-	end
+function c5827.descon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
 end
 function c5827.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
+	Duel.Hint(HINT_CARD,0,c:GetCode())
 	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,500) then
 		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,c)
 		Duel.Release(g,REASON_RULE)
