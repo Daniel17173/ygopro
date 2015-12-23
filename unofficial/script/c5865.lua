@@ -1,20 +1,22 @@
 --儀式の下準備
 --Script by mercury233
 
-io=require("io")
-Auxiliary.AddRitualProcGreater=function(c,filter)
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Auxiliary.RPGTarget(filter))
-	e1:SetOperation(Auxiliary.RPGOperation(filter))
-	c:RegisterEffect(e1)
-	if c.tmp_material_filter==nil then
-		local code=c:GetOriginalCode()
-		local mc=_G["c" .. code]
-		mc.tmp_material_filter_set=true
-		mc.tmp_material_filter=filter
+if aux.AddRitualProcGreaterCode==nil then
+	io=require("io")
+	Auxiliary.AddRitualProcGreater=function(c,filter)
+		local e1=Effect.CreateEffect(c)
+		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e1:SetType(EFFECT_TYPE_ACTIVATE)
+		e1:SetCode(EVENT_FREE_CHAIN)
+		e1:SetTarget(Auxiliary.RPGTarget(filter))
+		e1:SetOperation(Auxiliary.RPGOperation(filter))
+		c:RegisterEffect(e1)
+		if c.tmp_material_filter==nil then
+			local code=c:GetOriginalCode()
+			local mc=_G["c" .. code]
+			mc.tmp_material_filter_set=true
+			mc.tmp_material_filter=filter
+		end
 	end
 end
 function c5865.tmp_set_material_filter(c)
@@ -69,10 +71,17 @@ function c5865.filter(c,tp)
 	return bit.band(c:GetType(),0x82)==0x82 and c:IsAbleToHand() and Duel.IsExistingMatchingCard(c5865.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c)
 end
 function c5865.filter2(c,mc)
-	if bit.band(c:GetType(),0x81)==0x81 and c:IsAbleToHand() and not c:IsHasEffect(EFFECT_NECRO_VALLEY) then
+	return bit.band(c:GetType(),0x81)==0x81 and c:IsAbleToHand() and not c:IsHasEffect(EFFECT_NECRO_VALLEY) and c5865.isfit(c,mc)
+end
+function c5865.isfit(c,mc)
+	if mc.fit_monster then
+		return c:IsCode(table.unpack(mc.fit_monster))
+	elseif aux.AddRitualProcGreaterCode==nil then
 		if not mc.tmp_material_filter_set then c5865.tmp_set_material_filter(mc) end
 		return mc.tmp_material_filter~=nil and mc.tmp_material_filter(c)
-	else return false end
+	else
+		return false
+	end
 end
 function c5865.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5865.filter,tp,LOCATION_DECK,0,1,nil,tp) end
