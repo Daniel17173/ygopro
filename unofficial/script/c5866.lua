@@ -24,7 +24,7 @@ function c5866.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local cg=Duel.SelectMatchingCard(tp,c5866.filter,tp,LOCATION_EXTRA,0,1,1,nil,tp)
+	local cg=Duel.SelectMatchingCard(tp,c5866.filter,tp,LOCATION_EXTRA,0,1,1,nil)
 	if cg:GetCount()==0 then return end
 	Duel.ConfirmCards(1-tp,cg)
 	if Card.IsFusionCode then
@@ -36,7 +36,6 @@ function c5866.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		e1:SetValue(cg:GetFirst():GetCode())
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(5866,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 	else --temp implementation for old version
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(5866,0))
@@ -46,6 +45,5 @@ function c5866.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		e1:SetValue(cg:GetFirst():GetCode())
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(5866,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 	end
 end
