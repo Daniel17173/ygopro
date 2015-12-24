@@ -61,17 +61,17 @@ function c5829.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c5829.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe2)
+	return c:IsFaceup() and c:IsSetCard(0x1374)
 end
 function c5829.chaincon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c5829.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c5829.rllimit(e,c)
-	return not c:IsSetCard(0xe2)
+	return not c:IsSetCard(0x1374)
 end
 
 function c5829.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0xe2) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(0x1374) and c:IsLocation(LOCATION_EXTRA)
 end
 function c5829.pdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM 
