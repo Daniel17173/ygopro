@@ -24,9 +24,7 @@ function c5901.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if re:IsActiveType(TYPE_MONSTER) then typ=TYPE_MONSTER
 	elseif re:IsActiveType(TYPE_SPELL) then typ=TYPE_SPELL else typ=TYPE_TRAP end
 	if chk==0 then return Duel.IsExistingMatchingCard(c5901.cfilter,tp,LOCATION_HAND,0,1,nil,typ) end
-	--local g=Duel.SelectMatchingCard(tp,c5901.cfilter,tp,LOCATION_HAND,0,1,1,nil,typ)
-	--Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
-	Duel.DiscardHand(tp,c5901.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c5901.cfilter,1,1,REASON_COST+REASON_DISCARD,nil,typ)
 end
 function c5901.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
