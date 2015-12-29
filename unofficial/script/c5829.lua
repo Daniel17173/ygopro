@@ -17,12 +17,15 @@ function c5829.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_PZONE)
-	e3:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	e3:SetCode(EFFECT_CHANGE_DAMAGE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,1)
-	e3:SetCondition(c5829.chaincon)
-	e3:SetValue(1)
+	e3:SetCondition(c5829.damcon)
+	e3:SetValue(c5829.damval)
 	c:RegisterEffect(e3)
+	local e33=e3:Clone()
+	e33:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	c:RegisterEffect(e33)
 	--disable spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -63,8 +66,12 @@ end
 function c5829.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1374)
 end
-function c5829.chaincon(e,tp,eg,ep,ev,re,r,rp)
+function c5829.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c5829.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function c5829.damval(e,re,val,r,rp,rc)
+	if bit.band(r,REASON_EFFECT)~=0 then return 0 end
+	return val
 end
 function c5829.rllimit(e,c)
 	return not c:IsSetCard(0x1374)
