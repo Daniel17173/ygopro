@@ -40,10 +40,10 @@ function c5863.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c5863.atktg(e,c)
-	return c:IsSetCard(0x1374) 
+	return c:IsSetCard(0x1374) and c:IsFaceup()
 end
 function c5863.filt(c)
-	return c:IsSetCard(0x1374) 
+	return c:IsSetCard(0x1374) and c:IsFaceup()
 end
 function c5863.value(e,c)
 	return Duel.GetMatchingGroupCount(c5863.filt,c:GetControler(),LOCATION_ONFIELD,0,nil)*100

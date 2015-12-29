@@ -58,7 +58,7 @@ function c5828.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(5828)~=0)
 end
 function c5828.filter(c)
-	return c:IsSetCard(0x1374)
+	return c:IsSetCard(0x1374) and c:IsFaceup()
 end
 function c5828.relcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c5828.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
