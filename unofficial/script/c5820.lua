@@ -21,7 +21,7 @@ function c5820.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c5820.thfilter(c)
-	return c:IsType(TYPE_TUNER) and c:IsAttribute(ATTRIBUTE_LIGHT) and not c:IsCode(5820) and c:IsAbleToHand()
+	return c:IsType(TYPE_TUNER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==1 and not c:IsCode(5820) and c:IsAbleToHand()
 end
 function c5820.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5820.thfilter,tp,LOCATION_DECK,0,1,nil) end
