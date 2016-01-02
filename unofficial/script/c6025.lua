@@ -38,8 +38,8 @@ function c6025.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c6025.repfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
-		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_DRAGON)
+		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c6025.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c6025.repfilter,1,nil,tp) end
