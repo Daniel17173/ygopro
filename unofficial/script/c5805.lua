@@ -1,4 +1,5 @@
 --EMホタルクス
+--Script by mercury233
 function c5805.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
