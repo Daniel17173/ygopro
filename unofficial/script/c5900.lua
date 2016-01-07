@@ -3,6 +3,7 @@
 --Salvation-72001832
 
 function c5900.initial_effect(c)
+	aux.EnablePendulumAttribute(c)
 	--atk/def
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(5900,0))
