@@ -7,6 +7,7 @@ function c5840.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,0x1c0)
+	e1:SetCountLimit(1,5840)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c5840.condition)
 	e1:SetCost(c5840.cost)
@@ -19,7 +20,7 @@ function c5840.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c5840.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD)
+	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c5840.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
