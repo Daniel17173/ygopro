@@ -23,7 +23,7 @@ function c48427163.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c48427163.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)
 end
 function c48427163.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -47,7 +47,7 @@ function c48427163.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c48427163.spfilter(c,e,tp)
-	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c48427163.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

@@ -2,7 +2,7 @@
 --ygohack137-13790821
 function c71039903.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(60316373,0))
+	e1:SetDescription(aux.Stringid(71039903,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)

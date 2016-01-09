@@ -4,7 +4,7 @@
 function c97165977.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,5846,c97165977.mat_filter,1,false,false)
+	aux.AddFusionProcCodeFun(c,51777272,c97165977.mat_filter,1,false,false)
 	--spsummon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -40,11 +40,11 @@ function c97165977.initial_effect(c)
 	e4:SetOperation(c97165977.atkdesop)
 	c:RegisterEffect(e4)
 end
-c97165977_attacked=971659771
-c97165977_indestructible=971659772
+c97165977_attacked=97165977
+c97165977_indestructible=97165978
 
 function c97165977.mat_filter(c)
-	return c:IsSetCard(0xe1) or c:IsSetCard(0x209)
+	return c:IsSetCard(0xdf)
 end
 
 function c97165977.splimit(e,se,sp,st)

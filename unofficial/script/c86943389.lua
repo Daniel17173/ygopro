@@ -6,7 +6,6 @@ function c86943389.initial_effect(c)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(20366274,1))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLE_START)

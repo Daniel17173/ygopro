@@ -54,15 +54,15 @@ function c79794767.desop(e,tp,eg,ep,ev,re,r,rp)
 	else Duel.Destroy(c,REASON_RULE) end
 end
 function c79794767.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x1374)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0xe0)
 	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(79794767)~=0)
 end
 function c79794767.filter(c)
-	return c:IsSetCard(0x1374) and c:IsFaceup()
+	return c:IsSetCard(0xe0) and c:IsFaceup()
 end
 function c79794767.relcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c79794767.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c79794767.rellimit(e,c,tp,sumtp)
-	return not c:IsSetCard(0x1374)
+	return not c:IsSetCard(0xe0)
 end

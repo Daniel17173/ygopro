@@ -64,7 +64,7 @@ function c6283472.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c6283472.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1374)
+	return c:IsFaceup() and c:IsSetCard(0xe0)
 end
 function c6283472.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c6283472.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -74,11 +74,11 @@ function c6283472.damval(e,re,val,r,rp,rc)
 	return val
 end
 function c6283472.rllimit(e,c)
-	return not c:IsSetCard(0x1374)
+	return not c:IsSetCard(0xe0)
 end
 
 function c6283472.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x1374) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(0xe0) and c:IsLocation(LOCATION_EXTRA)
 end
 function c6283472.pdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM 

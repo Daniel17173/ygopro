@@ -40,7 +40,7 @@ function c33300669.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(33300669,RESET_EVENT+0x1fe0000,0,1)
 end
 function c33300669.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1374)
+	return c:IsFaceup() and c:IsSetCard(0xe0)
 end
 function c33300669.chainop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(c33300669.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) then return false end
@@ -58,6 +58,6 @@ function c33300669.desop(e,tp,eg,ep,ev,re,r,rp)
 	else Duel.Destroy(c,REASON_RULE) end
 end
 function c33300669.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x1374)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0xe0)
 	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(33300669)~=0)
 end

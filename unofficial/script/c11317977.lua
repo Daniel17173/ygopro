@@ -38,7 +38,7 @@ function c11317977.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c11317977.thfilter(c)
-	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER) and not c:IsCode(11317977) and c:IsAbleToHand()
+	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER) and not c:IsCode(11317977) and c:IsAbleToHand()
 end
 function c11317977.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c11317977.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -71,7 +71,7 @@ function c11317977.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_FUSION
 end
 function c11317977.thfilter2(c)
-	return c:IsSetCard(0x209) and not c:IsCode(11317977) and c:IsAbleToHand() and ((c:IsFaceup() and c:IsType(TYPE_MONSTER+TYPE_PENDULUM)) or c:IsType(TYPE_MONSTER))
+	return c:IsSetCard(0xdf) and not c:IsCode(11317977) and c:IsAbleToHand() and ((c:IsFaceup() and c:IsType(TYPE_MONSTER+TYPE_PENDULUM)) or c:IsType(TYPE_MONSTER))
 end
 function c11317977.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_EXTRA) and chkc:IsControler(tp) and c11317977.thfilter2(chkc) end

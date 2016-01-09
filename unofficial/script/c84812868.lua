@@ -23,7 +23,7 @@ function c84812868.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c84812868.spfilter(c,e,tp)
-	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER) and not c:IsCode(84812868) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER) and not c:IsCode(84812868) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c84812868.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c84812868.spfilter(chkc,e,tp) end
@@ -40,7 +40,7 @@ function c84812868.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c84812868.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x209)
+	return c:IsFaceup() and c:IsSetCard(0xdf)
 end
 function c84812868.filter2(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()

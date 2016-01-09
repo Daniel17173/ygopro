@@ -3,7 +3,7 @@
 --multi atk by mercury233
 function c51777272.initial_effect(c)
 	--fusion material
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0x209),2,true)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2,true)
 	c:EnableReviveLimit()
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
@@ -31,10 +31,10 @@ function c51777272.initial_effect(c)
 	e3:SetOperation(c51777272.damop)
 	c:RegisterEffect(e3)
 end
-c51777272_attacked=517772721
-c51777272_indestructible=517772722
+c51777272_attacked=51777272
+c51777272_indestructible=51777273
 function c51777272.matfil(c)
-	return c:IsSetCard(0xe1) or c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)
 end
 function c51777272.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1

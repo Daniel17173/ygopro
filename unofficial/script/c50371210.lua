@@ -17,7 +17,6 @@ function c50371210.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Remove
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(61127349,0))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetOperation(c50371210.rmop)

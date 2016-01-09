@@ -16,7 +16,6 @@ function c50554729.initial_effect(c)
 	c:RegisterEffect(e2)
 	--draw
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(17626381,0))
 	e3:SetCountLimit(1,50554729)
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -40,10 +39,10 @@ function c50554729.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c50554729.atktg(e,c)
-	return c:IsSetCard(0x1374) and c:IsFaceup()
+	return c:IsSetCard(0xe0) and c:IsFaceup()
 end
 function c50554729.filt(c)
-	return c:IsSetCard(0x1374) and c:IsFaceup()
+	return c:IsSetCard(0xe0) and c:IsFaceup()
 end
 function c50554729.value(e,c)
 	return Duel.GetMatchingGroupCount(c50554729.filt,c:GetControler(),LOCATION_ONFIELD,0,nil)*100
@@ -55,7 +54,7 @@ function c50554729.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c50554729.cfilter,1,nil,tp)
 end
 function c50554729.filter(c)
-	return c:IsSetCard(0x1374) and c:IsAbleToHand()
+	return c:IsSetCard(0xe0) and c:IsAbleToHand()
 end
 function c50554729.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c50554729.filter,tp,LOCATION_DECK,0,1,nil) end

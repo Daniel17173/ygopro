@@ -6,7 +6,7 @@ function c11439455.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e1:SetCountLimit(1,13851202)
+	e1:SetCountLimit(1,11439455)
 	e1:SetTarget(c11439455.target)
 	e1:SetOperation(c11439455.operation)
 	c:RegisterEffect(e1)
@@ -21,7 +21,7 @@ function c11439455.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c11439455.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x209) and not c:IsCode(11439455)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xdf) and not c:IsCode(11439455)
 end
 function c11439455.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c11439455.filter(chkc) end
@@ -44,7 +44,7 @@ function c11439455.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)
 end
 function c11439455.filter2(c,e,tp)
-	return c:IsSetCard(0x209) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c11439455.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
