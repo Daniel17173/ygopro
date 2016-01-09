@@ -1,6 +1,6 @@
 --RR－アルティメット・ファルコン
 --Script by mercury233
-function c5853.initial_effect(c)
+function c86221741.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_WINDBEAST),10,3)
 	c:EnableReviveLimit()
@@ -10,15 +10,15 @@ function c5853.initial_effect(c)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(c5853.efilter)
+	e1:SetValue(c86221741.efilter)
 	c:RegisterEffect(e1)
 	--act limit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(c5853.cost)
-	e2:SetOperation(c5853.operation)
+	e2:SetCost(c86221741.cost)
+	e2:SetOperation(c86221741.operation)
 	c:RegisterEffect(e2)
 	--atkdown
 	local e3=Effect.CreateEffect(c)
@@ -26,22 +26,22 @@ function c5853.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(c5853.atkcon)
-	e3:SetTarget(c5853.atktg)
-	e3:SetOperation(c5853.atkop)
+	e3:SetCondition(c86221741.atkcon)
+	e3:SetTarget(c86221741.atktg)
+	e3:SetOperation(c86221741.atkop)
 	c:RegisterEffect(e3)
 end
-function c5853.efilter(e,te)
+function c86221741.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
-function c5853.filter()
+function c86221741.filter()
 	return te:GetOwner()~=e:GetOwner()
 end
-function c5853.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c86221741.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c5853.operation(e,tp,eg,ep,ev,re,r,rp)
+function c86221741.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -56,23 +56,23 @@ function c5853.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetTargetRange(0,1)
-	e2:SetValue(c5853.aclimit)
+	e2:SetValue(c86221741.aclimit)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-function c5853.aclimit(e,re,tp)
+function c86221741.aclimit(e,re,tp)
 	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and not re:GetHandler():IsImmuneToEffect(e)
 end
-function c5853.atkcon(e,tp,eg,ep,ev,re,r,rp)
+function c86221741.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0xba)
 end
-function c5853.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c86221741.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if not Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) then
         Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
     end
 end
-function c5853.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c86221741.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
 		local sc=g:GetFirst()

@@ -1,6 +1,6 @@
 --Performapal Odd-Eyes Light Phoenix
 --By: HelixReactor
-function c5803.initial_effect(c)
+function c59762399.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--spsummon
@@ -9,9 +9,9 @@ function c5803.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetCondition(c5803.spcon)
-	e1:SetTarget(c5803.sptg)
-	e1:SetOperation(c5803.spop)
+	e1:SetCondition(c59762399.spcon)
+	e1:SetTarget(c59762399.sptg)
+	e1:SetOperation(c59762399.spop)
 	c:RegisterEffect(e1)
 	--ATK Boost
 	local e2=Effect.CreateEffect(c)
@@ -20,48 +20,48 @@ function c5803.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(c5803.atkcost)
-	e2:SetTarget(c5803.atktg)
-	e2:SetOperation(c5803.atkop)
+	e2:SetCost(c59762399.atkcost)
+	e2:SetTarget(c59762399.atktg)
+	e2:SetOperation(c59762399.atkop)
 	c:RegisterEffect(e2)
 end
-function c5803.confilter(c)
+function c59762399.confilter(c)
 	return (c:GetSequence()==6 or c:GetSequence()==7) and c:IsDestructable()
 end
-function c5803.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c59762399.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()==nil
-		and Duel.IsExistingMatchingCard(c5803.confilter,tp,LOCATION_SZONE,0,1,e:GetHandler())
+		and Duel.IsExistingMatchingCard(c59762399.confilter,tp,LOCATION_SZONE,0,1,e:GetHandler())
 end
-function c5803.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c59762399.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c5803.confilter,tp,LOCATION_SZONE,0,1,e:GetHandler())
+		and Duel.IsExistingMatchingCard(c59762399.confilter,tp,LOCATION_SZONE,0,1,e:GetHandler())
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function c5803.spop(e,tp,eg,ep,ev,re,r,rp)
+function c59762399.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local g=Duel.GetMatchingGroup(c5803.confilter,tp,LOCATION_SZONE,0,c)
+		local g=Duel.GetMatchingGroup(c59762399.confilter,tp,LOCATION_SZONE,0,c)
 		if Duel.Destroy(g,REASON_EFFECT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end
-function c5803.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c59762399.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
-function c5803.atkfilter(c)
+function c59762399.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9f)
 end
-function c5803.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c59762399.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c5803.atkfilter(chkc) and chkc~=c end
-	if chk==0 then return Duel.IsExistingTarget(c5803.atkfilter,tp,LOCATION_MZONE,0,1,c) end
-	local g=Duel.SelectTarget(tp,c5803.atkfilter,tp,LOCATION_MZONE,0,1,1,c)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c59762399.atkfilter(chkc) and chkc~=c end
+	if chk==0 then return Duel.IsExistingTarget(c59762399.atkfilter,tp,LOCATION_MZONE,0,1,c) end
+	local g=Duel.SelectTarget(tp,c59762399.atkfilter,tp,LOCATION_MZONE,0,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,0,0)
 end
-function c5803.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c59762399.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())

@@ -1,6 +1,6 @@
 --アモルファスP
 --Script by mercury233
-function c5862.initial_effect(c)
+function c23160024.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -25,59 +25,59 @@ function c5862.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EVENT_RELEASE)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
-	e4:SetCondition(c5862.drcon)
-	e4:SetTarget(c5862.drtg)
-	e4:SetOperation(c5862.drop)
+	e4:SetCondition(c23160024.drcon)
+	e4:SetTarget(c23160024.drtg)
+	e4:SetOperation(c23160024.drop)
 	c:RegisterEffect(e4)
 	--ritural
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_GRAVE)
-	e5:SetCost(c5862.spcost)
-	e5:SetTarget(c5862.sptg)
-	e5:SetOperation(c5862.spop)
+	e5:SetCost(c23160024.spcost)
+	e5:SetTarget(c23160024.sptg)
+	e5:SetOperation(c23160024.spop)
 	c:RegisterEffect(e5)
 end
-function c5862.cfilter(c,tp)
+function c23160024.cfilter(c,tp)
 	return c:IsSetCard(0x1374) and c:IsReason(REASON_RELEASE) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
-function c5862.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(5862)<2 and eg:IsExists(c5862.cfilter,1,nil,tp)
+function c23160024.drcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetFlagEffect(23160024)<2 and eg:IsExists(c23160024.cfilter,1,nil,tp)
 end
-function c5862.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c23160024.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
-function c5862.drop(e,tp,eg,ep,ev,re,r,rp)
+function c23160024.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,e:GetHandler():GetCode())
-	e:GetHandler():RegisterFlagEffect(5862,RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(23160024,RESET_PHASE+PHASE_END,0,1)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-function c5862.ritual_filter(c)
+function c23160024.ritual_filter(c)
 	return c:IsCode()
 end
-function c5862.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c23160024.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
-function c5862.spfilter(c,e,tp,mg)
+function c23160024.spfilter(c,e,tp,mg)
 	return c:IsCode(5844) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 		and mg:Filter(Card.IsCanBeRitualMaterial,c,c):CheckWithSumEqual(Card.GetRitualLevel,8,1,99,c)
 end
-function c5862.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c23160024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,TYPE_PENDULUM)
-		return Duel.IsExistingMatchingCard(c5862.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg) end
+		return Duel.IsExistingMatchingCard(c23160024.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-function c5862.spop(e,tp,eg,ep,ev,re,r,rp)
+function c23160024.spop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,TYPE_PENDULUM)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c5862.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg)
+	local g=Duel.SelectMatchingCard(tp,c23160024.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg)
 	local tc=g:GetFirst()
 	if tc then
 		local mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)

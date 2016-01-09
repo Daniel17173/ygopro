@@ -1,26 +1,26 @@
 --Light Guidance
 --ygohack137-13790822
-function c5860.initial_effect(c)
+function c50371210.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetTarget(c5860.target)
-	e1:SetOperation(c5860.operation)
+	e1:SetTarget(c50371210.target)
+	e1:SetOperation(c50371210.operation)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
-	e2:SetValue(c5860.val)
+	e2:SetValue(c50371210.val)
 	c:RegisterEffect(e2)
 	--Remove
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(61127349,0))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_LEAVE_FIELD)
-	e3:SetOperation(c5860.rmop)
+	e3:SetOperation(c50371210.rmop)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -28,33 +28,33 @@ function c5860.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_OATH)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(c5860.ftarget)
+	e4:SetTarget(c50371210.ftarget)
 	c:RegisterEffect(e4)
 end
-function c5860.filter2(c,e,tp)
-	return c:IsFaceup() and c:IsCode(5860)
+function c50371210.filter2(c,e,tp)
+	return c:IsFaceup() and c:IsCode(50371210)
 end
-function c5860.filter(c,e,tp)
+function c50371210.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0xdd)
 end
-function c5860.filter3(c,e,tp)
+function c50371210.filter3(c,e,tp)
 	return c:IsSetCard(0xdd)
 end
-function c5860.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c5860.filter(chkc,e,tp) end
+function c50371210.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c50371210.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c5860.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
-		and Duel.IsExistingTarget(c5860.filter3,tp,LOCATION_GRAVE,0,3,nil,e,tp) 
-	and not Duel.IsExistingTarget(c5860.filter2,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
+		and Duel.IsExistingTarget(c50371210.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
+		and Duel.IsExistingTarget(c50371210.filter3,tp,LOCATION_GRAVE,0,3,nil,e,tp) 
+	and not Duel.IsExistingTarget(c50371210.filter2,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c5860.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c50371210.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
-function c5860.eqlimit(e,c)
+function c50371210.eqlimit(e,c)
 	return e:GetOwner()==c
 end
-function c5860.operation(e,tp,eg,ep,ev,re,r,rp)
+function c50371210.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
@@ -66,7 +66,7 @@ function c5860.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
-		e1:SetValue(c5860.eqlimit)
+		e1:SetValue(c50371210.eqlimit)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
@@ -75,17 +75,17 @@ function c5860.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function c5860.rmop(e,tp,eg,ep,ev,re,r,rp)
+function c50371210.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetHandler():GetEquipTarget()
 	if tc then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-function c5860.ftarget(e,c)
+function c50371210.ftarget(e,c)
 	return e:GetHandler():GetEquipTarget()~=c
 end
 
-function c5860.val(e,c)
+function c50371210.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0xdd)-1
 end

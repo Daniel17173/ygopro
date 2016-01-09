@@ -1,6 +1,6 @@
 --Gendo the Master Monk
 --Scripted by Eerie Code @ Ygoproco - 6941
-function c5841.initial_effect(c)
+function c99000107.initial_effect(c)
 	--Cannot activate
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
@@ -8,14 +8,14 @@ function c5841.initial_effect(c)
 	e6:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e6:SetTargetRange(1,1)
-	e6:SetValue(c5841.aclimit)
+	e6:SetValue(c99000107.aclimit)
 	c:RegisterEffect(e6)
 	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetCondition(c5841.tgcon)
+	e2:SetCondition(c99000107.tgcon)
 	e2:SetValue(aux.tgval)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -24,9 +24,9 @@ function c5841.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 
-function c5841.aclimit(e,re,tp)
+function c99000107.aclimit(e,re,tp)
 	return re:GetHandler():IsAttackPos() and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
 end
-function c5841.tgcon(e)
+function c99000107.tgcon(e)
 	return e:GetHandler():IsDefencePos()
 end

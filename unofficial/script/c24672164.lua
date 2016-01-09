@@ -1,19 +1,19 @@
 --幻奏の華歌聖ブルーム・プリマ
-function c5845.initial_effect(c)
+function c24672164.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_FUSION_MATERIAL)
-	e1:SetCondition(c5845.fscon)
-	e1:SetOperation(c5845.fsop)
+	e1:SetCondition(c24672164.fscon)
+	e1:SetOperation(c24672164.fsop)
 	c:RegisterEffect(e1)
 	--summon success
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_MATERIAL_CHECK)
-	e2:SetValue(c5845.matcheck)
+	e2:SetValue(c24672164.matcheck)
 	c:RegisterEffect(e2)
 	--Double attack
 	local e3=Effect.CreateEffect(c)
@@ -23,18 +23,18 @@ function c5845.initial_effect(c)
 	c:RegisterEffect(e3)
 	--To hand
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(5845,0))
+	e4:SetDescription(aux.Stringid(24672164,0))
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e4:SetCondition(c5845.thcon)
-	e4:SetTarget(c5845.thtg)
-	e4:SetOperation(c5845.thop)
+	e4:SetCondition(c24672164.thcon)
+	e4:SetTarget(c24672164.thtg)
+	e4:SetOperation(c24672164.thop)
 	c:RegisterEffect(e4)
 end
 
-function c5845.fscon(e,g,gc,chkf)
+function c24672164.fscon(e,g,gc,chkf)
 	if g==nil then 
 		return false 
 	end
@@ -51,7 +51,7 @@ function c5845.fscon(e,g,gc,chkf)
 	if chkf~=PLAYER_NONE and not ag:IsExists(aux.FConditionCheckF,1,nil,chkf) then return false end
 	return c1>=2 and c2>0
 end
-function c5845.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
+function c24672164.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 	if gc then 
 		local g1=eg:Filter(Card.IsSetCard,nil,0x9b)
 		local mg=Group.CreateGroup()
@@ -60,7 +60,7 @@ function c5845.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 		mg:AddCard(tc)
 		if g1:IsContains(tc) then g1:RemoveCard(tc) end
 		mg:AddCard(gc)
-		if g1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(5845,1)) then
+		if g1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(24672164,1)) then
 			local fg2=g1:Select(tp,1,63,tc)
 			mg:Merge(fg2)
 		end
@@ -78,7 +78,7 @@ function c5845.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 	Duel.SetFusionMaterial(mg)
 end
 
-function c5845.matcheck(e,c)
+function c24672164.matcheck(e,c)
 	local ct=c:GetMaterialCount()
 	local ae=Effect.CreateEffect(c)
 	ae:SetType(EFFECT_TYPE_SINGLE)
@@ -88,21 +88,21 @@ function c5845.matcheck(e,c)
 	c:RegisterEffect(ae)
 end
 
-function c5845.thcon(e,tp,eg,ep,ev,re,r,rp)
+function c24672164.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_MZONE) and bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION 
 end
-function c5845.filter(c)
+function c24672164.filter(c)
 	return c:IsSetCard(0x9b) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c5845.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c5845.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c5845.filter,tp,LOCATION_GRAVE,0,1,nil) end
+function c24672164.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c24672164.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c24672164.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,c5845.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c24672164.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
-function c5845.thop(e,tp,eg,ep,ev,re,r,rp)
+function c24672164.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
