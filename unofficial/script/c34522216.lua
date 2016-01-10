@@ -1,4 +1,5 @@
 --アモルファージ・ガストル
+--Amorphage Gastr
 --Script by mercury233
 function c34522216.initial_effect(c)
 	--pendulum summon

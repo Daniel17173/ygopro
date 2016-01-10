@@ -1,4 +1,5 @@
 --天使の淚
+--Graceful Tears
 --Script by mercury233
 function c9032529.initial_effect(c)
 	--Activate

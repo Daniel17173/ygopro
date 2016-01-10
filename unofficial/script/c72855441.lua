@@ -1,4 +1,6 @@
 --青き眼の護人
+--Guard with Eyes of Blue
+--By: HelixReactor
 function c72855441.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
@@ -52,7 +54,7 @@ end
 function c72855441.gvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		if Duel.SendtoGrave(tc,REASON_EFFECT) 
+		if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(c72855441.spfilter2,tp,LOCATION_HAND,0,1,nil,e,tp) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

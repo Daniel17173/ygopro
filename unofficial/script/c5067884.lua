@@ -1,4 +1,6 @@
 --ダイナミスト・スピノス
+--Dinomist Spinos
+--By: HelixReactor
 function c5067884.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

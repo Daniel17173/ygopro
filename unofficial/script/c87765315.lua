@@ -1,4 +1,5 @@
 --真竜の目覚め
+--True Draco-Awakening
 --Script by mercury233
 function c87765315.initial_effect(c)
 	--Activate

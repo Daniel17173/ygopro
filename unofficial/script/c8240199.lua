@@ -1,4 +1,6 @@
 --青き眼の賢士
+--Sage Knight with Eyes of Blue
+--By: HelixReactor
 function c8240199.initial_effect(c)
 	--To hand
 	local e1=Effect.CreateEffect(c)
@@ -56,7 +58,7 @@ end
 function c8240199.gvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		if Duel.SendtoGrave(tc,REASON_EFFECT) 
+		if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(c8240199.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

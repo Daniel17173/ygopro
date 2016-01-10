@@ -1,4 +1,5 @@
 --BF－弔風のデス
+--Blackwing - Death the Mourning Wind
 --Script by mercury233
 function c19462747.initial_effect(c)
 	--lv up

@@ -1,4 +1,5 @@
 --アモルファージ・ノーテス
+--Amorphage Nortes
 --Script by mercury233
 function c32687071.initial_effect(c)
 	--pendulum summon

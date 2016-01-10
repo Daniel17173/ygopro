@@ -1,4 +1,5 @@
 --アモルファージ・ライシス
+--Amorphage Lysis
 --Script by mercury233
 function c47598941.initial_effect(c)
 	--Activate

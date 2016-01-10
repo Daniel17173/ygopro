@@ -1,4 +1,6 @@
 --ダイナミスト・エラプション
+--Dinomist Eruption
+--By: HelixReactor
 function c74582050.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DELAYED_QUICKEFFECT)
 	--Activate
