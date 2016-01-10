@@ -1,9 +1,9 @@
+--揺るがぬ絆
 --Unwavering Bonds
---Scripted by Eerie Code @ Ygoproco - 6979
 function c72648810.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(c72648810.condition)
@@ -18,8 +18,8 @@ end
 function c72648810.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+	if re:GetHandler():IsAbleToRemove() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
 	end
 end
 function c72648810.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -1,6 +1,7 @@
 --裏風の精霊
+--Spirit of the Backdraft
 function c26517393.initial_effect(c)
-	--summon
+	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -10,11 +11,11 @@ function c26517393.initial_effect(c)
 	e1:SetOperation(c26517393.op)
 	c:RegisterEffect(e1)
 end
-function c26517393.filter(c,e,tp)
+function c26517393.filter(c)
 	return c:IsType(TYPE_FLIP) and c:IsAbleToHand()
 end
 function c26517393.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c26517393.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c26517393.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c26517393.op(e,tp,eg,ep,ev,re,r,rp)

@@ -1,3 +1,4 @@
+光虫異変
 --Bug Emergency
 --Scripted by Eerie Code-6974
 function c10971759.initial_effect(c)

@@ -1,5 +1,6 @@
+--光虫基盤
 --Bug Matrix
---Scripted by Eerie Code-6964
+--Scripted by Eerie Code
 function c86643777.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,5 +1,5 @@
 --RR－アルティメット・ファルコン
---Script by mercury233
+--Raidraptor - Ultimate Falcon
 function c86221741.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_WINDBEAST),10,3)
@@ -34,23 +34,23 @@ end
 function c86221741.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
-function c86221741.filter()
-	return te:GetOwner()~=e:GetOwner()
-end
 function c86221741.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c86221741.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(0,LOCATION_MZONE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetValue(-1000)
-	c:RegisterEffect(e1)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local gc=g:GetFirst()
+	while gc do
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(-1000)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		gc:RegisterEffect(e1)
+		gc=g:GetNext()
+	end
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

@@ -1,3 +1,4 @@
+--チューナーズ・ハイ
 --Tuner's High
 --Scripted by Eerie Code @ Ygoproco - 6967
 function c85821180.initial_effect(c)

@@ -1,17 +1,19 @@
+--仁王立ち
 --Daunting Pose
---Scripted by Eerie Code @ Ygoproco - 6977
 function c19254117.initial_effect(c)
-	--Activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,19254117+EFFECT_COUNT_CODE_OATH)
+	e1:SetCondition(c19254117.condition)
 	e1:SetTarget(c19254117.target)
 	e1:SetOperation(c19254117.activate)
 	c:RegisterEffect(e1)
-	--Target
+	--attack target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -23,7 +25,9 @@ function c19254117.initial_effect(c)
 	e2:SetOperation(c19254117.tgop)
 	c:RegisterEffect(e2)
 end
-
+function c19254117.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+end
 function c19254117.deffil(c)
 	return aux.nzdef(c) and c:IsFaceup()
 end
@@ -33,22 +37,23 @@ function c19254117.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c19254117.deffil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function c19254117.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_DEFENCE_FINAL)
 		e1:SetValue(tc:GetDefence()*2)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EVENT_PHASE+PHASE_END)
-		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		e3:SetCountLimit(1)
-		e3:SetOperation(c19254117.ddop)
-		tc:RegisterEffect(e3)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetRange(LOCATION_MZONE)
+		e2:SetCode(EVENT_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e2:SetCountLimit(1)
+		e2:SetOperation(c19254117.ddop)
+		tc:RegisterEffect(e2)
 	end
 end
 function c19254117.ddop(e,tp,eg,ep,ev,re,r,rp)
@@ -71,6 +76,7 @@ end
 function c19254117.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,nil,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c19254117.tgop(e,tp,eg,ep,ev,re,r,rp)

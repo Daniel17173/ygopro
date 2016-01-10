@@ -1,5 +1,5 @@
+--レッドアイズ・トゥーン・ドラゴン
 --Red-Eyes Toon Dragon
---Scripted by Eerie Code-6936
 function c31733941.initial_effect(c)
 	--cannot attack
 	local e1=Effect.CreateEffect(c)
@@ -21,7 +21,6 @@ function c31733941.initial_effect(c)
 	c:RegisterEffect(e4)
 	--Special Summon
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(31733941,0))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
@@ -48,17 +47,18 @@ function c31733941.dircon(e)
 	return Duel.IsExistingMatchingCard(c31733941.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
 		and not Duel.IsExistingMatchingCard(c31733941.cfilter2,tp,0,LOCATION_MZONE,1,nil)
 end
-function c31733941.spfil(c,e,tp)
+function c31733941.spfilter(c,e,tp)
 	return c:IsType(TYPE_TOON) and not c:IsCode(31733941) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c31733941.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c31733941.spfil,tp,LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c31733941.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c31733941.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c31733941.spfil,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c31733941.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end

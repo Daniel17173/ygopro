@@ -1,3 +1,4 @@
+--EMオッドアイズ・ユニコーン
 --Performapal Odd-Eyes Unicorn
 --ygohack137-13790815
 function c86157908.initial_effect(c)

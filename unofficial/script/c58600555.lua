@@ -1,5 +1,6 @@
+--電子光虫－コアベージ
 --Digital Bug - Corebage
---Scripted by Eerie Code-6999
+--Scripted by Eerie Code
 function c58600555.initial_effect(c)
 	c:EnableReviveLimit()
 	--xyz summon

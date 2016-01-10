@@ -1,5 +1,6 @@
+--電子光虫－センチビット
 --Digital Bug - Centibit
---Scripted by Eerie Code-6934
+--Scripted by Eerie Code
 function c68950538.initial_effect(c)
 	--xyzlimit
 	local e0=Effect.CreateEffect(c)

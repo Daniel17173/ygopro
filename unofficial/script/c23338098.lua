@@ -1,5 +1,5 @@
+--A BF－涙雨のチドリ
 --Assault Blackwing - Chidori the Light Rain
---Scripted by Eerie Code-6939
 function c23338098.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
@@ -24,15 +24,15 @@ function c23338098.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetValue(c23338098.val)
+	e3:SetValue(c23338098.value)
 	c:RegisterEffect(e3)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(23338098,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_DESTROYED)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(c23338098.spcon)
 	e4:SetTarget(c23338098.sptg)
 	e4:SetOperation(c23338098.spop)
@@ -59,20 +59,25 @@ function c23338098.tnop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
 	c:RegisterEffect(e1)
 end
-function c23338098.val(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x33)*300
+function c23338098.atkfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x33)
+end
+function c23338098.value(e,c)
+	return Duel.GetMatchingGroupCount(c23338098.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*300
 end
 function c23338098.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_DESTROY)
+	return e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
-function c23338098.spfil(c,e,tp)
-	return c:IsRace(RACE_WINDBEAST) and c:IsType(TYPE_SYNCHRO) and not c:IsCode(23338098) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c23338098.spfilter(c,e,tp)
+	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_WINDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(23338098)
 end
 function c23338098.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c23338098.spfil(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c23338098.spfil,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	local g=Duel.SelectTarget(tp,c23338098.spfil,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c23338098.spfilter(chkc,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c23338098.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	Duel.SelectTarget(tp,c23338098.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,1,1,0,0)
 end
 function c23338098.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end

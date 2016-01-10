@@ -1,4 +1,5 @@
 --アモルファージ・オルガ
+--Amorphage Olga
 function c79794767.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
@@ -9,7 +10,7 @@ function c79794767.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetOperation(c79794767.flipop)
 	c:RegisterEffect(e1)
-	--destroy
+	--maintain
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -28,15 +29,15 @@ function c79794767.initial_effect(c)
 	e3:SetTargetRange(1,1)
 	e3:SetTarget(c79794767.sumlimit)
 	c:RegisterEffect(e3)
-	--cannot release
+	--act limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_PZONE)
 	e4:SetCode(EFFECT_CANNOT_RELEASE)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetRange(LOCATION_PZONE)
+	e4:SetTargetRange(1,1)
 	e4:SetCondition(c79794767.relcon)
 	e4:SetTarget(c79794767.rellimit)
-	e4:SetTargetRange(1,1)
 	c:RegisterEffect(e4)
 end
 function c79794767.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -48,7 +49,7 @@ end
 function c79794767.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_CARD,0,c:GetCode())
-	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,500) then
+	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,aux.Stringid(79794767,0)) then
 		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,c)
 		Duel.Release(g,REASON_RULE)
 	else Duel.Destroy(c,REASON_RULE) end

@@ -1,5 +1,6 @@
+--電子光虫－ウェブソルダー
 --Digital Bug - Websolder
---Scripted by Eerie Code-6933
+--Scripted by Eerie Code
 function c94344242.initial_effect(c)
 	--xyzlimit
 	local e0=Effect.CreateEffect(c)

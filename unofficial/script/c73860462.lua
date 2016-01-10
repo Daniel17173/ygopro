@@ -1,7 +1,7 @@
+--ワンダー・エクシーズ
 --Wonder Xyz
---Scripted by Eerie Code @ Ygoproco - 6976
 function c73860462.initial_effect(c)
-	--Activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

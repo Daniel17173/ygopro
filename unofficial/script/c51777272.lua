@@ -1,6 +1,5 @@
 --月光舞猫姫
---Scripted by Eerie Code
---multi atk by mercury233
+--Moonlight Cat Dancer
 function c51777272.initial_effect(c)
 	--fusion material
 	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2,true)
@@ -33,9 +32,6 @@ function c51777272.initial_effect(c)
 end
 c51777272_attacked=51777272
 c51777272_indestructible=51777273
-function c51777272.matfil(c)
-	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)
-end
 function c51777272.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1
 end
@@ -127,7 +123,6 @@ end
 function c51777272.atktg(e,c)
 	return c:GetFlagEffect(c51777272_attacked)>=2
 end
-
 function c51777272.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)

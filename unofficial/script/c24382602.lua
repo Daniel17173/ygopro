@@ -1,11 +1,12 @@
+--光の霊堂
 --Light Mausoleum
---ygohack137-13790813
 function c24382602.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
+	--extra summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
@@ -13,13 +14,14 @@ function c24382602.initial_effect(c)
 	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e2:SetTarget(c24382602.extg)
 	c:RegisterEffect(e2)
+	--atk Change
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1)
-	e3:SetTarget(c24382602.target)
-	e3:SetOperation(c24382602.activate)
+	e3:SetTarget(c24382602.atktg)
+	e3:SetOperation(c24382602.atkop)
 	c:RegisterEffect(e3)
 	--to hand
 	local e4=Effect.CreateEffect(c)
@@ -38,33 +40,31 @@ function c24382602.tgfilter(c)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(c24382602.cfilter,c:GetControler(),LOCATION_DECK+LOCATION_HAND,0,1,nil,c)
 end
 function c24382602.cfilter(c,tc)
-	return c:IsType(TYPE_NORMAL) and c:IsAbleToGrave()
+	return c:IsType(TYPE_NORMAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
-function c24382602.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c24382602.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c24382602.tgfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c24382602.tgfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c24382602.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
-function c24382602.activate(e,tp,eg,ep,ev,re,r,rp)
+function c24382602.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c24382602.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tc)
 	if g:GetCount()>0 then
 		local gc=g:GetFirst()
+		local lv=gc:GetLevel()
 		if Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and gc:IsLocation(LOCATION_GRAVE) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			e1:SetValue(gc:GetLevel()*100)
+			e1:SetValue(lv*100)
 			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetType(EFFECT_TYPE_SINGLE)
+			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENCE)
-			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			e2:SetValue(gc:GetLevel()*100)
 			tc:RegisterEffect(e2)
 		end
 	elseif Duel.IsPlayerCanDiscardDeck(tp,1) then

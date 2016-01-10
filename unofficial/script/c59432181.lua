@@ -1,4 +1,5 @@
 --融合識別
+--Fusion Tag
 --Script by mercury233
 function c59432181.initial_effect(c)
 	--Activate
@@ -15,10 +16,10 @@ function c59432181.filter(c)
 end
 function c59432181.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
-	if chk==0 then return Duel.IsExistingTarget(Auxiliary.TRUE,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c59432181.filter,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,Auxiliary.TRUE,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,nil,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c59432181.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -1,6 +1,5 @@
+--月光舞豹姫
 --Moon-Light Panther Dancer
---Scripted by Eerie Code @ Ygopro.co - 6947
---multi atk by mercury233
 function c97165977.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -37,12 +36,11 @@ function c97165977.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_BATTLE_DESTROYING)
 	e4:SetCondition(aux.bdocon)
-	e4:SetOperation(c97165977.atkdesop)
+	e4:SetOperation(c97165977.atkop)
 	c:RegisterEffect(e4)
 end
 c97165977_attacked=97165977
 c97165977_indestructible=97165978
-
 function c97165977.mat_filter(c)
 	return c:IsSetCard(0xdf)
 end
@@ -141,8 +139,7 @@ end
 function c97165977.atktg(e,c)
 	return c:GetFlagEffect(c97165977_attacked)>=2
 end
-
-function c97165977.atkdesop(e,tp,eg,ep,ev,re,r,rp)
+function c97165977.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)

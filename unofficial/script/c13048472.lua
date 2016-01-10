@@ -1,4 +1,5 @@
 --儀式の下準備
+--Pre-Preparation of Rites
 --Script by mercury233
 
 if aux.AddRitualProcGreaterCode==nil then
@@ -62,7 +63,7 @@ function c13048472.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,13048472)
+	e1:SetCountLimit(1,13048472+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c13048472.target)
 	e1:SetOperation(c13048472.activate)
 	c:RegisterEffect(e1)

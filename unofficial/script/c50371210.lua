@@ -1,5 +1,5 @@
+--光の導き
 --Light Guidance
---ygohack137-13790822
 function c50371210.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -10,17 +10,19 @@ function c50371210.initial_effect(c)
 	e1:SetTarget(c50371210.target)
 	e1:SetOperation(c50371210.operation)
 	c:RegisterEffect(e1)
+	--extra attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
 	e2:SetValue(c50371210.val)
 	c:RegisterEffect(e2)
-	--Remove
+	--remove
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetOperation(c50371210.rmop)
 	c:RegisterEffect(e3)
+	--cannot attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_ATTACK)
@@ -30,23 +32,23 @@ function c50371210.initial_effect(c)
 	e4:SetTarget(c50371210.ftarget)
 	c:RegisterEffect(e4)
 end
-function c50371210.filter2(c,e,tp)
-	return c:IsFaceup() and c:IsCode(50371210)
-end
-function c50371210.filter(c,e,tp)
+function c50371210.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0xdd)
 end
-function c50371210.filter3(c,e,tp)
+function c50371210.gvfilter(c)
 	return c:IsSetCard(0xdd)
 end
+function c50371210.cfilter(c)
+	return c:IsFaceup() and c:IsCode(50371210)
+end
 function c50371210.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c50371210.filter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c50371210.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c50371210.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
-		and Duel.IsExistingTarget(c50371210.filter3,tp,LOCATION_GRAVE,0,3,nil,e,tp) 
-	and not Duel.IsExistingTarget(c50371210.filter2,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
+		and Duel.IsExistingTarget(c50371210.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
+		and Duel.IsExistingTarget(c50371210.gvfilter,tp,LOCATION_GRAVE,0,3,nil) 
+	and not Duel.IsExistingTarget(c50371210.cfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c50371210.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c50371210.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
@@ -67,13 +69,13 @@ function c50371210.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(c50371210.eqlimit)
 		c:RegisterEffect(e1)
+		--Disable
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_DISABLE)
 		c:RegisterEffect(e2)
 	end
 end
-
 function c50371210.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetHandler():GetEquipTarget()

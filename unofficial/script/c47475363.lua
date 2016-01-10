@@ -1,4 +1,5 @@
 --波紋のバリア －ウェーブ・フォース－
+--Rippling Mirror Force
 --Script by mercury233
 function c47475363.initial_effect(c)
 	--Activate
@@ -14,8 +15,8 @@ end
 function c47475363.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
-function c47475363.filter(c,e,tp)
-	return c:IsAttackPos() and c:IsAbleToHand()
+function c47475363.filter(c)
+	return c:IsAttackPos() and c:IsAbleToDeck()
 end
 function c47475363.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c47475363.filter,tp,0,LOCATION_MZONE,1,nil) end

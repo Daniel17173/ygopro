@@ -1,4 +1,5 @@
 --フレンドリーファイア
+--Friendly Fire
 --Script by mercury233
 function c46253216.initial_effect(c)
 	--Activate
