@@ -1,5 +1,5 @@
---Jizukiru, the Star Destroyer Kaiju
---Scripted by Eerie Code @ Ygoproco - 63941210
+--Jizukiru, the Star Destroying Kaiju
+--Scripted by Eerie Code
 function c63941210.initial_effect(c)
 	c:SetUniqueOnField(1,0,20000000)
 	--special summon rule

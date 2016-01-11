@@ -1,5 +1,5 @@
---Disrupted Kaiju Dream
---Scripted by Eerie Code @ Ygoproco - 99330325
+--Interrupted Kaiju Slumber
+--Scripted by Eerie Code
 function c99330325.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
