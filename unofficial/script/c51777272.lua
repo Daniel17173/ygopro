@@ -2,7 +2,7 @@
 --Moonlight Cat Dancer
 function c51777272.initial_effect(c)
 	--fusion material
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xdf),2,true)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2,true)
 	c:EnableReviveLimit()
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
