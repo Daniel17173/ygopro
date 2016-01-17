@@ -80,7 +80,7 @@ function c19254117.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c19254117.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) then
 		if Duel.GetAttacker() then Duel.ChangeAttackTarget(tc) end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
