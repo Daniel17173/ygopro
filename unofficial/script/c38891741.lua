@@ -1,5 +1,5 @@
 --Ultimate Providence
---Scripted by Eerie Code-6881
+--Scripted by Eerie Code
 function c38891741.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

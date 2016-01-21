@@ -35,7 +35,6 @@ function c36956512.initial_effect(c)
 	e3:SetOperation(c36956512.atkop)
 	c:RegisterEffect(e3)
 end
-
 function c36956512.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xd3)
 end
@@ -56,7 +55,6 @@ function c36956512.spcon2(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c36956512.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
-
 function c36956512.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end

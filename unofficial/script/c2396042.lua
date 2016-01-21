@@ -1,7 +1,5 @@
 --Steel Cavalry of Dinon
 -- By ChibiNya
---Salvation-72001832
-
 function c2396042.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--atk/def
@@ -13,13 +11,11 @@ function c2396042.initial_effect(c)
 	e1:SetOperation(c2396042.adop)
 	c:RegisterEffect(e1)
 end
-
 function c2396042.adcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return bc and bc:IsFaceup() and bc:IsType(TYPE_PENDULUM)
 end
-
 function c2396042.adop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then

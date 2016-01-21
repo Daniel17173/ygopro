@@ -34,7 +34,6 @@ function c63941210.initial_effect(c)
 	e3:SetOperation(c63941210.disop)
 	c:RegisterEffect(e3)
 end
-
 function c63941210.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xd3)
 end
@@ -55,7 +54,6 @@ function c63941210.spcon2(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c63941210.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
-
 function c63941210.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
