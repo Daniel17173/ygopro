@@ -1,5 +1,6 @@
 --アークブレイブドラゴン
---
+--Arc Brave Dragon
+--Script by mercury233
 function c6000.initial_effect(c)
 	--remove
 	local e1=Effect.CreateEffect(c)
@@ -22,6 +23,7 @@ function c6000.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c6000.spcon)
 	e3:SetTarget(c6000.sptg)
