@@ -1,6 +1,6 @@
---Ruins of the Great Divine Dragon
+--巨神竜の遺跡
 --ygohack137-13718203
-function c6023.initial_effect(c)
+function c69868555.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,9 +12,9 @@ function c6023.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(c6023.discon)
-	e2:SetTarget(c6023.distg)
-	e2:SetOperation(c6023.disop)
+	e2:SetCondition(c69868555.discon)
+	e2:SetTarget(c69868555.distg)
+	e2:SetOperation(c69868555.disop)
 	c:RegisterEffect(e2)
 	--token
 	local e3=Effect.CreateEffect(c)
@@ -24,9 +24,9 @@ function c6023.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCost(c6023.tkcost)
-	e3:SetTarget(c6023.tktg)
-	e3:SetOperation(c6023.tkop)
+	e3:SetCost(c69868555.tkcost)
+	e3:SetTarget(c69868555.tktg)
+	e3:SetOperation(c69868555.tkop)
 	c:RegisterEffect(e3)
 	--to hand
 	local e4=Effect.CreateEffect(c)
@@ -34,33 +34,32 @@ function c6023.initial_effect(c)
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCost(c6023.thcost)
-	e4:SetTarget(c6023.thtg)
-	e4:SetOperation(c6023.thop)
+	e4:SetCost(c69868555.thcost)
+	e4:SetTarget(c69868555.thtg)
+	e4:SetOperation(c69868555.thop)
 	c:RegisterEffect(e4)
 end
-
-function c6023.cfilter(c)
+function c69868555.cfilter(c)
 	return c:IsFaceup() and not c:IsPreviousLocation(LOCATION_GRAVE)
 end
-function c6023.dfilter(c)
+function c69868555.dfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and (c:GetLevel()==7 or c:GetLevel()==8)
 end
-function c6023.discon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c6023.cfilter,1,nil) and Duel.IsExistingMatchingCard(c6023.dfilter,tp,LOCATION_MZONE,0,1,nil)
+function c69868555.discon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c69868555.cfilter,1,nil) and Duel.IsExistingMatchingCard(c69868555.dfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c6023.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c69868555.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(c6023.cfilter,nil)
+	local g=eg:Filter(c69868555.cfilter,nil)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,g:GetCount(),0,0)
 end
-function c6023.filter(c,e)
+function c69868555.filter(c,e)
 	return c:IsFaceup() and not c:IsPreviousLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e)
 end
-function c6023.disop(e,tp,eg,ep,ev,re,r,rp)
+function c69868555.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=eg:Filter(c6023.filter,nil,e)
+	local g=eg:Filter(c69868555.filter,nil,e)
 	if g:GetCount()>0 then
 	local tc=g:GetFirst()
 		while tc do
@@ -85,43 +84,41 @@ function c6023.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-function c6023.tkcostfilter(c)
+function c69868555.tkcostfilter(c)
 	return c:IsAbleToGraveAsCost() and c:IsFaceup()
 end
-function c6023.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c6023.tkcostfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
+function c69868555.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c69868555.tkcostfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c6023.tkcostfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c69868555.tkcostfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c6023.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c69868555.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,6024,0,0x4011,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,69868556,0,0x4011,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
-function c6023.tkop(e,tp,eg,ep,ev,re,r,rp)
+function c69868555.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not e:GetHandler():IsRelateToEffect(e) then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,6024,0,0x4011,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT) then return end
 	local token=Duel.CreateToken(tp,6024)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end
-
-function c6023.thcostfilter(c)
+function c69868555.thcostfilter(c)
 	return c:IsRace(RACE_DRAGON) and (c:GetLevel()==7 or c:GetLevel()==8)
 end
-function c6023.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c6023.thcostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler()) end
+function c69868555.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c69868555.thcostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c6023.thcostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c69868555.thcostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c6023.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c69868555.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
-function c6023.thop(e,tp,eg,ep,ev,re,r,rp)
+function c69868555.thop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
 		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,e:GetHandler())
