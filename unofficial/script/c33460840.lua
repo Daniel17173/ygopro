@@ -1,4 +1,5 @@
 --巨竜の守護騎士
+--Guardian of Felgrand
 --Script by mercury233
 function c33460840.initial_effect(c)
 	--equip
@@ -15,7 +16,7 @@ function c33460840.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(98446407,0))
+	e4:SetDescription(aux.Stringid(33460840,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)

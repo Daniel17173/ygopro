@@ -1,5 +1,5 @@
 --巨神竜フェルグラント
---ygohack137-13718200
+--Felgrand, the Great Divine Dragon
 function c60681103.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -40,15 +40,20 @@ end
 function c60681103.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
+	local atk=0
 	if tc:IsType(TYPE_XYZ) then  atk=tc:GetRank() else atk=tc:GetLevel() end
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk*100)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+0x1ff0000)
 			c:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_UPDATE_DEFENCE)
+			c:RegisterEffect(e2)
+		end
 	end
 end
 function c60681103.filter(c,e,tp)
