@@ -1,4 +1,4 @@
---Dragon Knight of Creation
+--創世の竜騎士
 --Scripted by Eerie Code-6119
 function c5681.initial_effect(c)
   --Level
