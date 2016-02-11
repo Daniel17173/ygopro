@@ -1,4 +1,5 @@
 --輝神鳥ヴェーヌ
+--Radiant Divine Bird Vene
 --Scripted by Eerie Code-6122
 function c100203099.initial_effect(c)
 	c:EnableReviveLimit()

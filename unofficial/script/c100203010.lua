@@ -1,7 +1,8 @@
 --原初の叫喚
+--Primal Cry
 --Scripted by Eerie Code-6123
 function c100203010.initial_effect(c)
-	aux.AddRitualProcGreaterCode(c,6122)
+	aux.AddRitualProcGreaterCode(c,100203099)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -24,15 +25,6 @@ function c100203010.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100203010.spfil(c,e,tp,turn)
 	return c:IsType(TYPE_RITUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetTurnID()==turn
-	--if not c:IsType(TYPE_RITUAL) then
-	--  return false
-	--elseif not c:IsPreviousLocation(LOCATION_ONFIELD) then
-	--  Debug.Message(""..c:GetCode().." was not on field.")
-	--  return false
-	--elseif c:GetTurnID()~=turn then
-	 --   Debug.Message(""..c:GetCode().." wasn't sent this turn.")
-	--  return false
-	--else return c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 end
 function c100203010.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local turn=Duel.GetTurnCount()
