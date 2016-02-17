@@ -1,4 +1,5 @@
 --創世の竜騎士
+--Dragon Knight of Creation
 --Scripted by Eerie Code-6119
 function c100200113.initial_effect(c)
   --Level
@@ -52,7 +53,9 @@ function c100200113.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100200113.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
   if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsAbleToGraveAsCost,1,1,REASON_COST)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100200113.spfil(c,e,tp)
   return c:IsRace(RACE_DRAGON) and (c:GetLevel()==7 or c:GetLevel()==8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -68,7 +71,7 @@ function c100200113.spop(e,tp,eg,ep,ev,re,r,rp)
   if Duel.GetLocationCount(tp,LOCATION_MZONE)<=-1 then return end
   local c=e:GetHandler()
   local tc=Duel.GetFirstTarget()
-  if tc:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)>0 then
+  if Duel.SendtoGrave(c,REASON_EFFECT)>0 and tc:IsRelateToEffect(e) then
 	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
   end
 end
