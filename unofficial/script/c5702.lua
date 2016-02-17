@@ -1,5 +1,6 @@
---Celtic Sacred Guard
---Scripted by Eerie Code-6117
+--エルフの聖剣士
+--Sacred Celtic Guard
+--Scripted by Eerie Code
 function c5702.initial_effect(c)
 	--cannot attack
 	local e1=Effect.CreateEffect(c)
@@ -29,11 +30,13 @@ function c5702.initial_effect(c)
 	e3:SetOperation(c5702.drop)
 	c:RegisterEffect(e3)
 end
+
 function c5702.atcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)>=1
 end
+
 function c5702.spfil(c,e,tp)
-	return c:IsSetCard(0xe4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0xe1) or c:IsCode(91152256) or c:IsCode(52077741)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c5702.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c5702.spfil,tp,LOCATION_HAND,0,1,nil,e,tp) end
@@ -47,11 +50,12 @@ function c5702.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+
 function c5702.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil
 end
 function c5702.drfil(c)
-	return c:IsFaceup() and c:IsSetCard(0xe4)
+	return c:IsFaceup() and (c:IsSetCard(0xe1) or c:IsCode(91152256) or c:IsCode(52077741))
 end
 function c5702.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
