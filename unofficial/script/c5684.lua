@@ -1,5 +1,5 @@
+--レモン・マジシャン・ガール
 --Lemon Magician Girl
---ygohack137-13701600
 function c5684.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
@@ -11,10 +11,11 @@ function c5684.initial_effect(c)
 	e1:SetTarget(c5684.thtg)
 	e1:SetOperation(c5684.thop)
 	c:RegisterEffect(e1)
+	--Special Summon + change battle target
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_BE_BATTLE_TARGET)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
@@ -23,7 +24,7 @@ function c5684.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c5684.cfilter(c)
-	return c:IsCode(38033121) or c:IsCode(43892408) or c:IsCode(90960358)
+	return c:IsSetCard(0x20a2) and not c:IsCode(5684)
 end
 function c5684.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c5684.cfilter,1,nil) end
@@ -45,6 +46,7 @@ function c5684.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+
 function c5684.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -59,7 +61,19 @@ function c5684.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c5684.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if tc then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		
+		local a=Duel.GetAttacker()
+		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetValue(a:GetAttack()/2)
+			a:RegisterEffect(e1)
+		end
+		
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -70,16 +84,6 @@ function c5684.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2)
-		Duel.BreakEffect()
-		local a=Duel.GetAttacker()
-		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			e1:SetValue(Duel.GetAttacker():GetAttack()/2)
-			Duel.GetAttacker():RegisterEffect(e1)
-			Duel.CalculateDamage(a,tc)
-		end
+		Duel.ChangeAttackTarget(tc)
 	end
 end
