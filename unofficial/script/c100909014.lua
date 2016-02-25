@@ -34,7 +34,7 @@ function c100909014.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(atk/2)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
 			c:RegisterEffect(e1,true)
-			Duel.SpecialSummonComplete()
 		end
+		Duel.SpecialSummonComplete()
 	end
 end
