@@ -18,7 +18,7 @@ function c5702.initial_effect(c)
 	e2:SetTarget(c5702.sptg)
 	e2:SetOperation(c5702.spop)
 	c:RegisterEffect(e2)
-	--remove
+	--draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetDescription(aux.Stringid(5702,1))
@@ -52,7 +52,7 @@ function c5702.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c5702.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil
+	return Duel.GetAttacker()==e:GetHandler()
 end
 function c5702.drfil(c)
 	return c:IsFaceup() and (c:IsSetCard(0xe1) or c:IsCode(91152256) or c:IsCode(52077741))
