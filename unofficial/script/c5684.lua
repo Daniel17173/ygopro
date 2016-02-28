@@ -3,6 +3,7 @@
 function c5684.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(5684,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -13,12 +14,12 @@ function c5684.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Special Summon + change battle target
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(5684,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_BE_BATTLE_TARGET)
 	e2:SetCountLimit(1)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(c5684.sptg)
 	e2:SetOperation(c5684.spop)
 	c:RegisterEffect(e2)
@@ -46,7 +47,6 @@ function c5684.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
 function c5684.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -61,19 +61,7 @@ function c5684.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c5684.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if tc then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-		
-		local a=Duel.GetAttacker()
-		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
-			e1:SetValue(a:GetAttack()/2)
-			a:RegisterEffect(e1)
-		end
-		
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -84,6 +72,17 @@ function c5684.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2)
-		Duel.ChangeAttackTarget(tc)
+		Duel.SpecialSummonComplete()
+		local a=Duel.GetAttacker()
+		if a and a:IsAttackable() and a:IsFaceup() and not a:IsImmuneToEffect(e) and not at:IsStatus(STATUS_ATTACK_CANCELED) then
+			Duel.BreakEffect()
+			Duel.ChangeAttackTarget(tc)
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e3:SetReset(RESET_EVENT+0x1fe0000)
+			e3:SetValue(math.ceil(at:GetAttack()/2))
+			at:RegisterEffect(e3)
+		end
 	end
 end
