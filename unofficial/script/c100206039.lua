@@ -1,86 +1,105 @@
 --花札衛－雨四光－
 --Cardian - Ameshikou
---ygohack137-13703000
+--Script by dest
 function c100206039.initial_effect(c)
-	--synchro summon
-	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),3)
 	c:EnableReviveLimit()
+	--synchro summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe3))
-	e1:SetValue(aux.tgval)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetRange(LOCATION_EXTRA)
+	e1:SetCondition(aux.SynCondition(nil,aux.NonTuner(nil),3,3))
+	e1:SetTarget(aux.SynTarget(nil,aux.NonTuner(nil),3,3))
+	e1:SetOperation(aux.SynOperation(nil,aux.NonTuner(nil),3,3))
+	e1:SetValue(SUMMON_TYPE_SYNCHRO)
 	c:RegisterEffect(e1)
 	--indes
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(c100206039.indtg)
+	e2:SetTarget(c100206039.target)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_TO_HAND)
-	e3:SetCondition(c100206039.regcon)
-	e3:SetOperation(c100206039.regop)
+	--cannot be target
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--destroy
+	--damage
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
+	e4:SetDescription(aux.Stringid(100206039,0))
+	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e4:SetCode(EVENT_PHASE+PHASE_END)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetCode(EVENT_DRAW)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1)
-	e4:SetCondition(c100206039.condition)
-	e4:SetTarget(c100206039.target)
-	e4:SetOperation(c100206039.operation)
+	e4:SetCondition(c100206039.damcon)
+	e4:SetTarget(c100206039.damtg)
+	e4:SetOperation(c100206039.damop)
 	c:RegisterEffect(e4)
+	--ep effects
+	local e5=Effect.CreateEffect(c)
+	e5:SetCategory(CATEGORY_DISABLE)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e5:SetCode(EVENT_PHASE+PHASE_END)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCountLimit(1)
+	e5:SetCondition(c100206039.epcon)
+	e5:SetTarget(c100206039.eptg)
+	e5:SetOperation(c100206039.epop)
+	c:RegisterEffect(e5)
 end
-function c100206039.indtg(e,c)
+function c100206039.target(e,c)
 	return c:IsSetCard(0xe3)
 end
-function c100206039.cfilter(c,tp)
-	return c:IsControler(tp) and Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)
+function c100206039.damcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp and r==REASON_RULE
 end
-function c100206039.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100206039.cfilter,1,nil,1-tp)
+function c100206039.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(1500)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1500)
 end
-function c100206039.regop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Damage(1-tp,1500,REASON_EFFECT)
+function c100206039.damop(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Damage(p,d,REASON_EFFECT)
 end
-
-
-function c100206039.condition(e,tp,eg,ep,ev,re,r,rp)
+function c100206039.epcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-function c100206039.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100206039.eptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local op=Duel.SelectOption(tp,aux.Stringid(100206039,0),aux.Stringid(100206039,1))
+	local c=e:GetHandler()
+	local op=0
+	Duel.Hint(HINT_SELECTMSG,tp,550)
+	if aux.disfilter1(c) then
+		op=Duel.SelectOption(tp,aux.Stringid(100206039,1),aux.Stringid(100206039,2))
+	else op=Duel.SelectOption(tp,aux.Stringid(100206039,1))
+	end
 	e:SetLabel(op)
 end
-function c100206039.operation(e,tp,eg,ep,ev,re,r,rp)
+function c100206039.epop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetTargetRange(1,0)
 		e1:SetCode(EFFECT_SKIP_DP)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetTargetRange(1,0)
+		e1:SetReset(RESET_PHASE+PHASE_END,3)
 		Duel.RegisterEffect(e1,tp)
-	else 
+	else
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY,2)
 		c:RegisterEffect(e1)
-	 end
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		c:RegisterEffect(e2)
+	end
 end
