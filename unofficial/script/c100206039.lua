@@ -10,7 +10,7 @@ function c100206039.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x137e))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe3))
 	e1:SetValue(aux.tgval)
 	c:RegisterEffect(e1)
 	--indes
@@ -44,7 +44,7 @@ function c100206039.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100206039.indtg(e,c)
-	return c:IsSetCard(0x137e)
+	return c:IsSetCard(0xe3)
 end
 function c100206039.cfilter(c,tp)
 	return c:IsControler(tp) and Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)
