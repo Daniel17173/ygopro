@@ -15,7 +15,7 @@ function c100207014.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100207014,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_BECOME_TARGET)
 	e2:SetCondition(c100207014.spcon1)
@@ -49,7 +49,7 @@ function c100207014.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100207014.spfilter(c,e,tp)
-	return c:IsSetCard(0x20a2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x20a2) and not c:IsCode(100207014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100207014.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100207014)<1 and eg:IsContains(e:GetHandler()) and rp~=tp 
