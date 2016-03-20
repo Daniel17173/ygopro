@@ -8,7 +8,6 @@ function c100909009.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetCountLimit(1,100909009)
@@ -28,6 +27,8 @@ function c100909009.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_CHAIN_NEGATED)
 	e3:SetRange(LOCATION_HAND)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetCondition(c100909009.spcon2)
 	e3:SetTarget(c100909009.sptg)
 	e3:SetOperation(c100909009.spop)
 	c:RegisterEffect(e3)
@@ -46,12 +47,12 @@ function c100909009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909009.pspop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	end
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
+		Duel.SendtoGrave(c,REASON_RULE)
+ 	end
 end
-
-
 function c100909009.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)
 	if chk==0 then return b1 end
@@ -62,7 +63,9 @@ function c100909009.penop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end
-
+function c100909009.spcon2(e,tp,eg,ep,ev,re,r,rp)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
+end
 function c100909009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
@@ -70,7 +73,9 @@ function c100909009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909009.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsLocation(LOCATION_HAND) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	end
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
+		Duel.SendtoGrave(c,REASON_RULE)
+ 	end
 end
