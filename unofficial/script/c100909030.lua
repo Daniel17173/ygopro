@@ -45,12 +45,11 @@ function c100909030.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100909030.splimit(e,se,sp,st)
-	local sc=se:GetHandler()
-	return sc:IsSetCard(0xe4)
+	return se:GetHandler():IsSetCard(0xe4)
 end
 function c100909030.spfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and c:IsSetCard(c) and not c:IsCode(100909030)
+		and c:IsSetCard(0xe4) and not c:IsCode(100909030)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c100909030.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -63,10 +62,10 @@ function c100909030.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909030.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
-			Duel.SendtoGrave(c,REASON_RULE)
-		end
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		Duel.SendtoGrave(c,REASON_RULE)
 	end
 end
 function c100909030.cfilter(c)
