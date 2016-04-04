@@ -21,7 +21,8 @@ function c100909066.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEDOWN,REASON_COST)
 end
 function c100909066.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2)
+		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=12 end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
