@@ -17,14 +17,16 @@ function c94689206.initial_effect(c)
 	e2:SetOperation(c94689206.spop)
 	c:RegisterEffect(e2)
 	--indes
-    local e3=Effect.CreateEffect(c)
-    e3:SetType(EFFECT_TYPE_FIELD)
-    e3:SetCode(EFFECT_INDESTRUCTABLE)
-    e3:SetRange(LOCATION_MZONE)
-    e3:SetTargetRange(LOCATION_MZONE,0)
-    e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_ROCK))
-    e3:SetValue(c94689206.indesval)
-    c:RegisterEffect(e3)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EFFECT_DESTROY_REPLACE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetTarget(c94689206.reptg)
+	e3:SetValue(c94689206.repval)
+	c:RegisterEffect(e3)
+	local g=Group.CreateGroup()
+	g:KeepAlive()
+	e3:SetLabelObject(g)
 	--to hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(94689206,0))
@@ -51,8 +53,19 @@ function c94689206.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectMatchingCard(tp,c94689206.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,3,3,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c94689206.indesval(e,re,r,rp)
-    return bit.band(r,REASON_RULE+REASON_BATTLE)==0
+function c94689206.repfilter(c,e,tp)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_ROCK) and not c:IsReason(REASON_BATTLE)
+end
+function c94689206.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return eg:IsExists(c94689206.repfilter,1,nil,e,tp) end
+	local g=eg:Filter(c94689206.repfilter,nil,e,tp)
+	e:GetLabelObject():Clear()
+	e:GetLabelObject():Merge(g)
+	return true
+end
+function c94689206.repval(e,c)
+	local g=e:GetLabelObject()
+	return g:IsContains(c)
 end
 function c94689206.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

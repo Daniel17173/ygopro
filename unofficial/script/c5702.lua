@@ -34,14 +34,14 @@ function c5702.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e4:SetCode(EFFECT_ADD_SETCODE)
-	e4:SetValue(0xe1)
+	e4:SetValue(0x1e4)
 	c:RegisterEffect(e4)
 end
 function c5702.atcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)>=1
 end
 function c5702.spfilter(c,e,tp)
-	return (c:IsSetCard(0xe1) or c:IsCode(91152256) or c:IsCode(52077741)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x1e4) or c:IsCode(91152256) or c:IsCode(52077741)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c5702.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -60,7 +60,7 @@ function c5702.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttacker()==e:GetHandler()
 end
 function c5702.drfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0xe1) or c:IsCode(91152256) or c:IsCode(52077741))
+	return c:IsFaceup() and (c:IsSetCard(0x1e4) or c:IsCode(91152256) or c:IsCode(52077741))
 end
 function c5702.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c5702.drfilter,tp,LOCATION_MZONE,0,nil)
