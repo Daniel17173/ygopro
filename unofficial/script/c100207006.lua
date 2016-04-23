@@ -42,9 +42,7 @@ function c100207006.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,100) end
 	local g=Duel.GetMatchingGroup(c100207006.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	local tg=g:GetMaxGroup(Card.GetAttack)
-	local maxc=Duel.GetLP(tp)
-	local maxpay=tg:GetFirst():GetAttack()
-	if maxpay<maxc then maxc=maxpay end
+	local maxc=math.min(Duel.GetLP(tp),tg:GetFirst():GetAttack())
 	maxc=math.floor(maxc/100)*100
 	local t={}
 	for i=1,maxc/100 do
@@ -54,8 +52,7 @@ function c100207006.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,cost)
 	e:SetLabel(cost)
 end
-function c100207006.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=e:GetHandler() and c100207006.filter(chkc) end
+function c100207006.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100207006.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 end
 function c100207006.operation(e,tp,eg,ep,ev,re,r,rp)
