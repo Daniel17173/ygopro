@@ -26,9 +26,9 @@ http://mercury233.me/ygosrv233/pre.html
 
 本项目将作为[ygopro-pre-script](https://github.com/Fluorohydride/ygopro-pre-script)的衍生项目，遵循其版权协定（见下方），但本项目额外要求转载时注明出处，并完整保留本声明。
 
-星星图标是[Yusuke Kamiyamane](http://p.yusukekamiyamane.com/)的作品
+星星和加号图标是[Yusuke Kamiyamane](http://p.yusukekamiyamane.com/)的作品
 
-数据整理：[Loki](https://twitter.com/Daniel17173)，尸体
+数据整理：[Loki](https://twitter.com/Daniel17173)，伤心暗星尘，duel球球，[尸体](http://mercury233.me/)
 
 如果您想对本项目进行修改，请移步 https://github.com/Daniel17173/ygopro ，但我们建议您直接参与官方项目[ygopro-pre-script](https://github.com/Fluorohydride/ygopro-pre-script)。
 
