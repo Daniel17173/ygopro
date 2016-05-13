@@ -51,19 +51,20 @@ function c100206101.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100206101.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	local g=Duel.GetDecktopGroup(tp,1)
-	local tc=g:GetFirst()
-	if tc and Duel.Draw(p,d,REASON_EFFECT)~=0 then
+	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
+		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		Duel.BreakEffect()
-		if ft>0 and tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1e5)
-			and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-			and Duel.SelectYesNo(tp,aux.Stringid(100206101,1)) then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		if ft>0 and tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1e5) then
+			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+				and Duel.SelectYesNo(tp,aux.Stringid(100206101,1)) then
+				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			end
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)
 		end
+		Duel.ShuffleHand(tp)
 	end
 end
 function c100206101.cardiansynlevel(c)
