@@ -44,6 +44,7 @@ function c100910054.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100910054.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
@@ -80,7 +81,7 @@ function c100910054.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c100910054.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100910054.matfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c20802187.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c100910054.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c100910054.matop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
