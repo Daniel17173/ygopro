@@ -2,6 +2,7 @@
 --No Cheaters Allowed
 --Script by nekrozar
 function c100910070.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100910070,0))
@@ -44,6 +45,7 @@ function c100910070.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100910070.filter(c)
 	return c:GetSummonLocation()==LOCATION_HAND and c:IsAbleToHand()
+		and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
 end
 function c100910070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100910070.filter,tp,0,LOCATION_MZONE,1,nil) end
