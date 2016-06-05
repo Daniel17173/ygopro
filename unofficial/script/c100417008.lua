@@ -1,9 +1,8 @@
 --天声の服従
---Lullaby of Obedience
---Script by mercury233
 function c100417008.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(c100417008.cost)
@@ -12,8 +11,8 @@ function c100417008.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100417008.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2000)
-	else Duel.PayLPCost(tp,2000) end
+	if chk==0 then return Duel.CheckLPCost(tp,2000) end
+	Duel.PayLPCost(tp,2000)
 end
 function c100417008.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,1,nil)
@@ -35,7 +34,7 @@ function c100417008.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,sg)
 		local b1=tc:IsAbleToHand()
 		local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and tc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,1-tp,true,false,POS_FACEUP_ATTACK,tp)
+			and tc:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP_ATTACK,tp)
 		local sel=0
 		if b1 and b2 then
 			Duel.Hint(HINT_SELECTMSG,1-tp,555)
@@ -51,7 +50,7 @@ function c100417008.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(sg,tp,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		elseif sel==2 then
-			Duel.SpecialSummon(sg,0,1-tp,tp,true,false,POS_FACEUP_ATTACK)
+			Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEUP_ATTACK)
 		end
 	else
 		Duel.ConfirmCards(tp,g)
