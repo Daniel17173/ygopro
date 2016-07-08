@@ -81,12 +81,18 @@ end
 function c100405029.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=Duel.GetMatchingGroupCount(c100405029.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if ct1>0 then
-		if Duel.DiscardDeck(1-tp,ct1,REASON_EFFECT)~=0 then
+		if Duel.DiscardDeck(tp,ct1,REASON_EFFECT)~=0 then
+			local lc=0
 			local og=Duel.GetOperatedGroup()
 			local ct2=og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
-			if ct2>0 then
-				Duel.Recover(tp,ct2*500,REASON_EFFECT)
+			local c=og:GetFirst()
+			while c do
+				if (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251)) then
+					lc=lc+500
+				end
+				c=og:GetNext()
 			end
+			Duel.Recover(tp,lc,REASON_EFFECT)
 		end
 	end
 end
