@@ -44,7 +44,7 @@ function c100910035.chcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return rp==1-tp and (rc:GetType()==TYPE_SPELL or rc:GetType()==TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
-function c100910035.costfilter(c)
+function c100910035.cfilter(c)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c100910035.chcost(e,tp,eg,ep,ev,re,r,rp,chk)

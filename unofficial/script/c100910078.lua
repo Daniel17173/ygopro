@@ -53,23 +53,10 @@ function c100910078.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetLabel(ct)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_CHAIN_SOLVING)
-	e3:SetOperation(c100910078.disop)
-	e3:SetLabel(ct)
-	e3:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e3,tp)
 end
 function c100910078.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsType(e:GetLabel())
 end
 function c100910078.distg(e,c)
 	return c:IsType(e:GetLabel())
-end
-function c100910078.disop(e,tp,eg,ep,ev,re,r,rp)
-	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if tl==LOCATION_MZONE and re:IsActiveType(e:GetLabel()) then
-		Duel.NegateEffect(ev)
-	end
 end
