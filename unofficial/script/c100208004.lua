@@ -36,7 +36,7 @@ function c100208004.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100208004.thfilter(c)
 	local lv=c:GetLevel()
-	return c:IsFaceup() and c:IsSetCard(0x11ed) and (lv==1 or lv==8) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x10ec) and (lv==1 or lv==8) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c100208004.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100208004.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -54,7 +54,7 @@ end
 function c100208004.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=Duel.GetFieldCard(tp,LOCATION_SZONE,6)
 	local tc2=Duel.GetFieldCard(tp,LOCATION_SZONE,7)
-	return tc1 and tc1:IsSetCard(0x11ed) and tc2 and tc2:IsSetCard(0x11ed)
+	return tc1 and tc1:IsSetCard(0x10ec) and tc2 and tc2:IsSetCard(0x10ec)
 end
 function c100208004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -62,7 +62,7 @@ function c100208004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100208004.filter(c,e,tp)
 	local lv=c:GetLevel()
-	return (c:IsLocation(LOCATION_HAND) or (c:IsFaceup() and c:IsLocation(LOCATION_EXTRA))) and c:IsSetCard(0x11ed)
+	return (c:IsLocation(LOCATION_HAND) or (c:IsFaceup() and c:IsLocation(LOCATION_EXTRA))) and c:IsSetCard(0x10ec)
 		and (lv==1 or lv==8) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100208004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
