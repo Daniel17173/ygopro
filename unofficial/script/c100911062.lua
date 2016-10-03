@@ -7,19 +7,19 @@ function c100911062.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100911062)
+	e1:SetCountLimit(1,100911062+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100911062.target)
 	e1:SetOperation(c100911062.activate)
 	c:RegisterEffect(e1)
 end
-function c100911062.filter(c,e,tp,m)
+function c100911062.filter(c,e,tp,mg)
 	if not c:IsSetCard(0x10cf) or bit.band(c:GetType(),0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
-	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
+	local g=mg:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if c.mat_filter then
-		mg=mg:Filter(c.mat_filter,nil)
+		g=g:Filter(c.mat_filter,nil)
 	end
-	return mg
+	return g:GetCount()>0
 end
 function c100911062.matfilter1(c,tp)
 	local lv=c:GetLevel()
@@ -32,7 +32,6 @@ function c100911062.matfilter2(c,lv,att)
 end
 function c100911062.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg=Duel.GetRitualMaterial(tp)
 		local mg=Duel.GetMatchingGroup(c100911062.matfilter1,tp,LOCATION_HAND,0,nil,tp)
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(c100911062.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,mg)
@@ -43,7 +42,7 @@ function c100911062.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local mg=Duel.GetMatchingGroup(c100911062.matfilter1,tp,LOCATION_HAND,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tg=Duel.SelectMatchingCard(tp,c100911062.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg)
+	local tg=Duel.SelectMatchingCard(tp,c100911062.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,mg)
 	local tc1=tg:GetFirst()
 	if tc1 then
 		if tc1:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.IsChainDisablable(0) then
