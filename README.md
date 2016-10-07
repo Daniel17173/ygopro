@@ -14,8 +14,6 @@ http://mercury233.me/ygosrv233/pre.html
 
 [任天堂世界论坛](http://bbs.newwise.com/forum-8-1.html)
 
-[@Solari_28](https://twitter.com/Solari_28)
-
 脚本来源：
 
 [ygopro-pre-script](https://github.com/Fluorohydride/ygopro-pre-script)
