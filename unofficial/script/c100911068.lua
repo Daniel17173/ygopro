@@ -1,15 +1,14 @@
 --迷い風
---Bewildering Wind
---Script by mercury233
 function c100911068.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100911068,0))
-	e1:SetCategory(CATEGORY_DISABLE)
+	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c0)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
+	e1:SetCondition(c100911068.condition)
 	e1:SetTarget(c100911068.target)
 	e1:SetOperation(c100911068.activate)
 	c:RegisterEffect(e1)
@@ -25,9 +24,11 @@ function c100911068.initial_effect(c)
 	e2:SetOperation(c100911068.setop)
 	c:RegisterEffect(e2)
 end
+function c100911068.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+end
 function c100911068.filter(c)
-	return c:IsFaceup() and not c:IsDisabled()
-		and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return c:IsFaceup() and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
 end
 function c100911068.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100911068.filter(chkc) end
@@ -38,7 +39,7 @@ end
 function c100911068.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -62,8 +63,7 @@ function c100911068.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100911068.cfilter,1,nil,tp)
 end
 function c100911068.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsSSetable()
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	if chk==0 then return e:GetHandler():IsSSetable() end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c100911068.setop(e,tp,eg,ep,ev,re,r,rp)

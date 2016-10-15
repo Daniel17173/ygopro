@@ -1,6 +1,4 @@
 --河伯
---Kawanokami
---Script by nekrozar
 function c100911030.initial_effect(c)
 	--spirit return
 	aux.EnableSpiritReturn(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
@@ -15,7 +13,7 @@ function c100911030.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100911030,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetTarget(c100911030.postg)
 	e2:SetOperation(c100911030.posop)
