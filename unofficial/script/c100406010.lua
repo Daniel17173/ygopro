@@ -35,7 +35,7 @@ function c100406010.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100406010.ffilter1(c)
-	return c:IsFusionSetCard(0x1f3) or c:IsFusionCode(96622984,22011689,69105797)
+	return c:IsFusionSetCard(0x11f3) or c:IsFusionCode(96622984,22011689,69105797)
 end
 function c100406010.ffilter2(c)
 	return c:GetOriginalLevel()>=8 and c:IsAttribute(ATTRIBUTE_DARK)
@@ -93,7 +93,8 @@ function c100406010.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100406010.rmfilter,tp,LOCATION_GRAVE,0,c)
 	if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(100406010,2)) then
+		and c:IsLocation(LOCATION_GRAVE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.SelectYesNo(tp,aux.Stringid(100406010,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local rg=g:Select(tp,1,1,nil)
