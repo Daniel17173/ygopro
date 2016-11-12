@@ -4,7 +4,7 @@
 function c100406033.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1f4),aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),false)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1f4),c100406033.ffilter2,false)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -34,6 +34,9 @@ function c100406033.initial_effect(c)
 	e3:SetOperation(c100406033.rmop)
 	c:RegisterEffect(e3)
 end
+function c100406033.ffilter2(c)
+	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsLocation(LOCATION_MZONE)
+end
 function c100406033.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
 end
@@ -58,7 +61,9 @@ function c100406033.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local g=Duel.GetMatchingGroup(c100406033.rmfilter2,tp,0,LOCATION_MZONE,nil,tc:GetAttribute())
-		g:AddCard(tc)
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		if tc:IsFaceup() and g:GetCount()>0 then
+			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		end
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

@@ -19,7 +19,7 @@ function c100406005.initial_effect(c)
 	--fusion summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100406005,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100406005)
@@ -60,7 +60,7 @@ function c100406005.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100406005.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFacedown() or not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) then return end
+	if not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) then return end
 	local mg1=Duel.GetMatchingGroup(c100406005.filter1,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,c,e,tp)
 	local sg1=Duel.GetMatchingGroup(c100406005.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,c)
 	local mg2=nil
