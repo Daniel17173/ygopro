@@ -1,7 +1,7 @@
 --HEROの遺産
 --Legacy of a HERO
 --Scripted by Eerie Code
---requires alterations to old scripts
+--don't requires alterations to old scripts for now _(:з」∠)_
 function c100214016.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -16,7 +16,7 @@ function c100214016.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100214016.cfilter(c)
-	return aux.IsMaterialListSetCard(c,0x8) and c:IsType(TYPE_FUSION) and c:IsAbleToExtraAsCost()
+	return ((c:IsSetCard(0x8) and not c:IsSetCard(0xa008)) or c:IsCode(86346643,76263644)) and c:IsType(TYPE_FUSION) and c:IsAbleToExtraAsCost()
 end
 function c100214016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100214016.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
