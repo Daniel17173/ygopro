@@ -76,7 +76,7 @@ function c100331001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
-function c100331001.thfilter1(c,tp)
+function c100331001.thfilter1(c,tp,id)
 	return c:IsType(TYPE_MONSTER) and c:IsReason(REASON_DESTROY) and c:GetTurnID()==id
 		and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and Duel.IsExistingMatchingCard(c100331001.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
@@ -88,14 +88,14 @@ function c100331001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=Duel.GetMatchingGroup(c100331001.thfilter1,tp,0x70,0x70,nil,tp)
+		local g=Duel.GetMatchingGroup(c100331001.thfilter1,tp,0x70,0x70,nil,tp,Duel.GetTurnCount())
 		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100331001,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 			local cg=g:Select(tp,1,1,nil)
 			Duel.HintSelection(cg)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=Duel.SelectMatchingCard(tp,c100331001.thfilter2,tp,LOCATION_DECK,0,1,1,nil,cg:GetFirst())
+			local sg=Duel.SelectMatchingCard(tp,c100331001.thfilter2,tp,LOCATION_DECK,0,1,1,nil,cg:GetFirst():GetCode())
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end
