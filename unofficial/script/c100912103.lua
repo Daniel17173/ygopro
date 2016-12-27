@@ -27,12 +27,12 @@ function c100912103.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100912103.otfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsReleasable()
+	return c:IsType(TYPE_CONTINUOUS) and c:IsReleasable()
 end
-function c100912103.otcon(e,c)
+function c100912103.otcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return c:GetLevel()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100912103.otfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100912103.otop(e,tp,eg,ep,ev,re,r,rp,c)
