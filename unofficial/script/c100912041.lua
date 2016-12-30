@@ -4,7 +4,7 @@
 --Effect is not fully implemented
 function c100912041.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,100912043,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1f8),1,true,true)
+	aux.AddFusionProcCodeFun(c,100912043,c100912041.ffilter,1,true,true)
 	--increase level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100912041,0))
@@ -52,11 +52,14 @@ function c100912041.initial_effect(c)
 		Duel.RegisterEffect(ge1,tp)
 	end
 end
+function c100912041.ffilter(c)
+	return c:IsFusionSetCard(0x1f8) or c:IsCode(8491961)
+end
 function c100912041.checkfilter(c,tp)
-	return c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0
+	return c:IsSetCard(0x1f8) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0
 end
 function c100912041.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if not eg then return  end
+	if not eg then return end
 	local sg=eg:Filter(c100912041.checkfilter,nil,tp)
 	local tc=sg:GetFirst()
 	while tc do
@@ -70,7 +73,7 @@ function c100912041.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100912041.lvfilter(c)
-	return c:IsSetCard(0x1f8) and c:GetFlagEffect(100912041)>0
+	return (c:IsSetCard(0x1f8) or c:IsCode(8491961)) and c:GetFlagEffect(100912041)>0
 end
 function c100912041.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
