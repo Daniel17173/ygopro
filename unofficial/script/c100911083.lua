@@ -34,7 +34,6 @@ function c100911083.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetTargetRange(LOCATION_ONFIELD,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xed))
 	e1:SetValue(c100911083.indval)
@@ -59,11 +58,7 @@ end
 function c100911083.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)==0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
-		Duel.SendtoGrave(c,REASON_RULE)
-	end
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100911083.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
