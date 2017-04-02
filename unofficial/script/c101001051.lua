@@ -1,4 +1,8 @@
---电影之骑士 盖亚剑士
+--電影の騎士ガイアセイバー
+--Gaiasaber, the Video Knight
+--Script by nekrozar
 function c101001051.initial_effect(c)
-	Debug.Message("「电影之骑士 盖亚剑士」暂时无法使用！")
+	--link summon
+	aux.AddLinkProcedure(c,nil,2)
+	c:EnableReviveLimit()
 end
