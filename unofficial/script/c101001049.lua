@@ -31,14 +31,17 @@ function c101001049.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(c101001049.spcon2)
 	e3:SetTarget(c101001049.sptg2)
 	e3:SetOperation(c101001049.spop2)
 	c:RegisterEffect(e3)
 end
+function c101001049.atkfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1fe)
+end
 function c101001049.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x11fd)*5000
+	return Duel.GetMatchingGroup(c101001049.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)*300
 end
 function c101001049.cfilter(c,g)
 	return c:IsSetCard(0x1fd) and g:IsContains(c)
@@ -67,8 +70,7 @@ function c101001049.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and zone~=0 then
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone)
-		Duel.SpecialSummonComplete()
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
 function c101001049.spcon2(e,tp,eg,ep,ev,re,r,rp)
