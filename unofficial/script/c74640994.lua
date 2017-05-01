@@ -29,22 +29,22 @@ function c74640994.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ops={}
 	local opval={}
 	if b1 then
-		ops[off]=aux.Stringid(74640994,0)
+		ops[off]=515
 		opval[off-1]=1
 		off=off+1
 	end
 	if b2 then
-		ops[off]=aux.Stringid(74640994,1)
+		ops[off]=514
 		opval[off-1]=2
 		off=off+1
 	end
 	if b3 then
-		ops[off]=aux.Stringid(74640994,2)
+		ops[off]=1113
 		opval[off-1]=3
 		off=off+1
 	end
 	if b4 then
-		ops[off]=aux.Stringid(74640994,3)
+		ops[off]=1125
 		opval[off-1]=4
 		off=off+1
 	end
