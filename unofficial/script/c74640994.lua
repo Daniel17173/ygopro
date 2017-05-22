@@ -6,9 +6,14 @@ function c74640994.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
+	e1:SetCondition(c74640994.condition)
 	e1:SetTarget(c74640994.target)
 	e1:SetOperation(c74640994.activate)
 	c:RegisterEffect(e1)
+end
+function c74640994.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c74640994.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xed)
@@ -29,22 +34,22 @@ function c74640994.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ops={}
 	local opval={}
 	if b1 then
-		ops[off]=515
+		ops[off]=aux.Stringid(74640994,0)
 		opval[off-1]=1
 		off=off+1
 	end
 	if b2 then
-		ops[off]=514
+		ops[off]=aux.Stringid(74640994,1)
 		opval[off-1]=2
 		off=off+1
 	end
 	if b3 then
-		ops[off]=1113
+		ops[off]=aux.Stringid(74640994,2)
 		opval[off-1]=3
 		off=off+1
 	end
 	if b4 then
-		ops[off]=1125
+		ops[off]=aux.Stringid(74640994,3)
 		opval[off-1]=4
 		off=off+1
 	end
@@ -111,8 +116,7 @@ function c74640994.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c74640994.effectfilter(e,ct)
-	local p=e:GetHandlerPlayer()
-	local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
+	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
 	local tc=te:GetHandler()
 	return tc:IsSetCard(0xed)
 end
