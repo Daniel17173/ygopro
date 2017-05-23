@@ -106,10 +106,9 @@ function c82224646.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function c82224646.scfilter1(c,e,tp,mc)
-	c:AssumeProperty(ASSUME_TYPE,c:GetOriginalType())
-	local mg=Group.FromCards(c,mc)
+	--local mg=Group.FromCards(c,mc)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(c82224646.scfilter2,tp,LOCATION_EXTRA,0,1,nil,mg)
+		--and Duel.IsExistingMatchingCard(c82224646.scfilter2,tp,LOCATION_EXTRA,0,1,nil,mg)
 end
 function c82224646.scfilter2(c,mg)
 	return c:IsSynchroSummonable(nil,mg)
@@ -147,5 +146,7 @@ function c82224646.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SynchroSummon(tp,sg:GetFirst(),nil,mg)
+	else
+		Duel.Remove(mg,POS_FACEDOWN,REASON_RULE)
 	end
 end
