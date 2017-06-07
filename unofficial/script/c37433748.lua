@@ -1,5 +1,4 @@
 --SPYRAL GEAR - Last Resort
---Scripted by Eerie Code
 function c37433748.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -39,7 +38,7 @@ function c37433748.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
 	e1:SetValue(c37433748.eqlimit)
 	e1:SetLabelObject(tc)
-	c:RegisterEffect(e1)   
+	c:RegisterEffect(e1)
 	--destroy sub
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
