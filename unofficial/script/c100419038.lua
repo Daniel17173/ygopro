@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 --Prototype, might require a core update for full functionality
 function c100419038.initial_effect(c)
-	c:SetUniqueOnField(100419038,1,0)
+	c:SetUniqueOnField(1,0,100419038)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -30,7 +30,7 @@ function c100419038.effop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(100419038,RESET_EVENT+0x1fe0000,0,1)
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(100419038,0))
+		e1:SetDescription(1117)
 		e1:SetType(EFFECT_TYPE_QUICK_O)
 		e1:SetCode(EVENT_FREE_CHAIN)
 		e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -50,9 +50,9 @@ function c100419038.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE)
 		and not gc:IsDisabled() and c100419038.efffilter(c,gc:GetSequence(),true)
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,0,0)
 end
 function c100419038.daop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 --Prototype, might require a core update for full functionality
 function c100419040.initial_effect(c)
-	c:SetUniqueOnField(100419040,1,0)
+	c:SetUniqueOnField(1,0,100419040)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -30,7 +30,7 @@ function c100419040.effop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(100419040,RESET_EVENT+0x1fe0000,0,1)
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(100419040,0))
+		e1:SetDescription(1104)
 		e1:SetCategory(CATEGORY_TOHAND)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_BATTLE_START)

@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 --Prototype, might require a core update for full functionality
 function c100419041.initial_effect(c)
-	c:SetUniqueOnField(100419041,1,0)
+	c:SetUniqueOnField(1,0,100419041)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -30,11 +30,12 @@ function c100419041.effop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(100419041,RESET_EVENT+0x1fe0000,0,1)
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(100419041,0))
+		e1:SetDescription(1108)
 		e1:SetCategory(CATEGORY_REMOVE+CATEGORY_DRAW)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_TO_HAND)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetRange(LOCATION_MZONE)
 		e1:SetCondition(c100419041.rmcon)
 		e1:SetCost(aux.bfgcost)
 		e1:SetTarget(c100419041.rmtg)
@@ -53,6 +54,7 @@ function c100419041.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(htp)
 	Duel.SetTargetParam(1)
 	e:SetLabelObject(ec)
+	ec:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,ec,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,htp,1)
 end
