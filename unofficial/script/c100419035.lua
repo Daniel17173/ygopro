@@ -61,6 +61,7 @@ function c100419035.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(eg,REASON_EFFECT)
 end
 function c100419035.spreg(e,tp,eg,ep,ev,re,r,rp)
+	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	if c:IsReason(REASON_COST) and rc:IsSetCard(0x207) then
@@ -96,7 +97,7 @@ function c100419035.effop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(100419035,RESET_EVENT+0x1fe0000,0,1)
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(1131)
+		e1:SetDescription(aux.Stringid(100419035,0))
 		e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 		e1:SetType(EFFECT_TYPE_QUICK_O)
 		e1:SetCode(EVENT_FREE_CHAIN)
