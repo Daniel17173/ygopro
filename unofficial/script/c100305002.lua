@@ -13,8 +13,8 @@ end
 function c100305002.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsType(TYPE_COUNTER)
 end
-function c100305002.thfilter(c,cc)
-	return c:IsType(TYPE_COUNTER) and not c:IsCode(cc) and c:IsAbleToHand()
+function c100305002.thfilter(c,code)
+	return c:IsType(TYPE_COUNTER) and not c:IsCode(code) and c:IsAbleToHand()
 end
 function c100305002.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -26,8 +26,8 @@ function c100305002.atkop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 	local rc=re:GetHandler()
 	if not rc then return end
-	local cc=rc:GetCode()
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100305002.thfilter),tp,LOCATION_GRAVE,0,nil,cc)
+	local code=rc:GetCode()
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100305002.thfilter),tp,LOCATION_GRAVE,0,nil,code)
 	if Duel.IsEnvironment(56433456) and g:GetCount()>0 then
 		Duel.Hint(HINT_CARD,0,100305002)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
