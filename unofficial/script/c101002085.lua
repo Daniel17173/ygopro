@@ -10,7 +10,7 @@ function c101002085.initial_effect(c)
 	e1:SetOperation(c101002085.activate)
 	c:RegisterEffect(e1)
 end
-function c101002085.cfilter(c,e,tp,ft,bs)
+function c101002085.cfilter(c,e,tp,m,ft)
 	if bit.band(c:GetType(),0x81)~=0x81 or not c:IsSetCard(0x106) or c:IsPublic()
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	if c.mat_filter then
