@@ -55,6 +55,7 @@ function c100223026.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100223026.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
