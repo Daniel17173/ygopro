@@ -68,19 +68,22 @@ function c100223066.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsAbleToExtraAsCost() end
 	Duel.SendtoDeck(c,nil,0,REASON_COST)
 end
-function c100223066.spfilter(c,e,tp,setcode)
-	return c:IsFaceup() and c:IsSetCard(setcode) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+function c100223066.spfilter1(c,e,tp)
+	return c:IsFaceup() and c:IsSetCard(0x10b5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and Duel.IsExistingTarget(c100223066.spfilter2,tp,LOCATION_REMOVED,0,1,c,e,tp)
+end
+function c100223066.spfilter2(c,e,tp)
+	return c:IsFaceup() and c:IsSetCard(0x20b5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100223066.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetMZoneCount(tp,e:GetHandler())>1
-		and Duel.IsExistingTarget(c100223066.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp,0x10b5)
-		and Duel.IsExistingTarget(c100223066.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp,0x20b5) end
+		and Duel.IsExistingTarget(c100223066.spfilter1,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectTarget(tp,c100223066.spfilter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp,0x10b5)
+	local g1=Duel.SelectTarget(tp,c100223066.spfilter1,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g2=Duel.SelectTarget(tp,c100223066.spfilter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp,0x20b5)
+	local g2=Duel.SelectTarget(tp,c100223066.spfilter2,tp,LOCATION_REMOVED,0,1,1,g1:GetFirst(),e,tp)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
 end
